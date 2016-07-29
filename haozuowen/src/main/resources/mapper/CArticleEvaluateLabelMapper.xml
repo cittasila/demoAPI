@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.mapper.CArticleEvaluateLabelMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.CArticleEvaluateLabel" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="label_content" property="labelContent" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="CHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_active" property="isActive" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+      id,label_content,create_time,update_time,is_active
+  </sql>  <insert id="insert" parameterType="com.langying.models.CArticleEvaluateLabel" >
+    insert into c_article_evaluate_label (id, label_content, create_time, 
+      update_time, is_active)
+    values (#{id,jdbcType=INTEGER}, #{labelContent,jdbcType=VARCHAR}, #{createTime,jdbcType=CHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{isActive,jdbcType=CHAR})
+  </insert>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.id != null" >
+         and id = #{params.id,jdbcType=INTEGER}
+      </if>
+      <if test="params.labelContent != null" >
+         and label_content = #{params.labelContent,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createTime != null" >
+         and create_time = #{params.createTime,jdbcType=CHAR}
+      </if>
+      <if test="params.updateTime != null" >
+         and update_time = #{params.updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.isActive != null" >
+         and is_active = #{params.isActive,jdbcType=CHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from c_article_evaluate_label
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from c_article_evaluate_label
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from c_article_evaluate_label
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <insert id="insertSelective" parameterType="com.langying.models.CArticleEvaluateLabel" >
+    insert into c_article_evaluate_label
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="labelContent != null" >
+        label_content,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="labelContent != null" >
+        #{labelContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

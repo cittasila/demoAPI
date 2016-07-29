@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.mapper.UUserMobileHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.UUserMobileHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, mobile, create_time
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.userId != null" >
+         and user_id = #{params.userId,jdbcType=INTEGER}
+      </if>
+      <if test="params.mobile != null" >
+         and mobile = #{params.mobile,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createTime != null" >
+         and create_time = #{params.createTime,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_user_mobile_history
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from u_user_mobile_history
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_user_mobile_history
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from u_user_mobile_history
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from u_user_mobile_history
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.UUserMobileHistory" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_user_mobile_history (user_id, mobile, create_time
+      )
+    values (#{userId,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.UUserMobileHistory" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_user_mobile_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.UUserMobileHistory" >
+    update u_user_mobile_history
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.UUserMobileHistory" >
+    update u_user_mobile_history
+    set user_id = #{userId,jdbcType=INTEGER},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

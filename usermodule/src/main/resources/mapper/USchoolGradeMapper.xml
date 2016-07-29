@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.mapper.USchoolGradeMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.USchoolGrade" >
+    <id column="school_grade_id" property="schoolGradeId" jdbcType="INTEGER" />
+    <result column="grade_id" property="gradeId" jdbcType="CHAR" />
+    <result column="school_id" property="schoolId" jdbcType="INTEGER" />
+    <result column="score_standard_zh" property="scoreStandardZh" jdbcType="VARCHAR" />
+    <result column="score_standard_en" property="scoreStandardEn" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    school_grade_id, grade_id, school_id, score_standard_zh, score_standard_en
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.gradeId != null" >
+         and grade_id = #{params.gradeId,jdbcType=CHAR}
+      </if>
+      <if test="params.schoolId != null" >
+         and school_id = #{params.schoolId,jdbcType=INTEGER}
+      </if>
+      <if test="params.scoreStandardZh != null" >
+         and score_standard_zh = #{params.scoreStandardZh,jdbcType=VARCHAR}
+      </if>
+      <if test="params.scoreStandardEn != null" >
+         and score_standard_en = #{params.scoreStandardEn,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_school_grade
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from u_school_grade
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_school_grade
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from u_school_grade
+    where school_grade_id = #{schoolGradeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from u_school_grade
+    where school_grade_id = #{schoolGradeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.USchoolGrade" >
+    <selectKey resultType="java.lang.Integer" keyProperty="schoolGradeId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_school_grade (grade_id, school_id, score_standard_zh, 
+      score_standard_en)
+    values (#{gradeId,jdbcType=CHAR}, #{schoolId,jdbcType=INTEGER}, #{scoreStandardZh,jdbcType=VARCHAR}, 
+      #{scoreStandardEn,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.USchoolGrade" >
+    <selectKey resultType="java.lang.Integer" keyProperty="schoolGradeId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_school_grade
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gradeId != null" >
+        grade_id,
+      </if>
+      <if test="schoolId != null" >
+        school_id,
+      </if>
+      <if test="scoreStandardZh != null" >
+        score_standard_zh,
+      </if>
+      <if test="scoreStandardEn != null" >
+        score_standard_en,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gradeId != null" >
+        #{gradeId,jdbcType=CHAR},
+      </if>
+      <if test="schoolId != null" >
+        #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="scoreStandardZh != null" >
+        #{scoreStandardZh,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreStandardEn != null" >
+        #{scoreStandardEn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.USchoolGrade" >
+    update u_school_grade
+    <set >
+      <if test="gradeId != null" >
+        grade_id = #{gradeId,jdbcType=CHAR},
+      </if>
+      <if test="schoolId != null" >
+        school_id = #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="scoreStandardZh != null" >
+        score_standard_zh = #{scoreStandardZh,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreStandardEn != null" >
+        score_standard_en = #{scoreStandardEn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where school_grade_id = #{schoolGradeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.USchoolGrade" >
+    update u_school_grade
+    set grade_id = #{gradeId,jdbcType=CHAR},
+      school_id = #{schoolId,jdbcType=INTEGER},
+      score_standard_zh = #{scoreStandardZh,jdbcType=VARCHAR},
+      score_standard_en = #{scoreStandardEn,jdbcType=VARCHAR}
+    where school_grade_id = #{schoolGradeId,jdbcType=INTEGER}
+  </update>
+</mapper>

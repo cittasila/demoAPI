@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+
+    <context id="context1" targetRuntime="MyBatis3">
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+            <property name="searchString" value="Example$"/>
+            <property name="replaceString" value="Criteria"/>
+        </plugin>
+        <plugin type="org.mybatis.generator.plugins.MybatisCriteriaPlugin" >
+            <property name="commonFile" value="true"/>
+        </plugin>
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="${driver}" connectionURL="${url}" userId="${user}" password="${password}"/>
+        <javaModelGenerator targetPackage="com.langying.models" targetProject="${targetProject}/src/main/java" />
+        <sqlMapGenerator targetPackage="mapper" targetProject="${targetProject}/src/main/resources" />
+        <javaClientGenerator targetPackage="com.langying.controller.mapper" targetProject="${targetProject}/src/main/java" type="XMLMAPPER"/>
+
+
+        <!--
+        <table tableName="%" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="ID" sqlStatement="MySql" identity="true" />
+        </table>
+        -->
+
+     <!--  <table tableName="u_user" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" >
+        <generatedKey column="user_id" sqlStatement="MySql" identity="true" />
+        </table>
+        <table tableName="u_classes_user" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="classes_id" sqlStatement="MySql" identity="true" />
+        </table>
+        <table tableName="u_classes" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" >
+        <generatedKey column="classes_id" sqlStatement="MySql" identity="true" />
+    </table>
+        <table tableName="u_school_grade" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" >
+        <generatedKey column="school_grade_id" sqlStatement="MySql" identity="true" />
+    </table>
+        <table tableName="u_grade" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" >
+        <generatedKey column="grade_id" sqlStatement="MySql" identity="true" />
+    </table>
+        <table tableName="u_school" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" >
+        <generatedKey column="school_id" sqlStatement="MySql" identity="true" />
+    </table>
+        <table tableName="u_semester" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" >
+        <generatedKey column="USER_ID" sqlStatement="MySql" identity="true" />
+    </table>-->
+       <!-- <table tableName="u_user_product_history" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" >
+-->
+        <table tableName="r_user_gold_detail" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="user_gold_detail_id" sqlStatement="MySql" identity="true" />
+        </table>
+       <!--
+       <table tableName="u_classes_user" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" >
+        </table>
+       <table tableName="u_distcd" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="dist_cd" sqlStatement="MySql" identity="true" />
+        </table>-->
+
+    </context>
+</generatorConfiguration>

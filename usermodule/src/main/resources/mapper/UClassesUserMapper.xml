@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.mapper.UClassesUserMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.UClassesUser" >
+    <id column="classes_id" property="classesId" jdbcType="INTEGER" />
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    classes_id, user_id, group_id, update_date
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.groupId != null" >
+         and group_id = #{params.groupId,jdbcType=INTEGER}
+      </if>
+      <if test="params.updateDate != null" >
+         and update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_classes_user
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from u_classes_user
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_classes_user
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.langying.models.UClassesUserKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from u_classes_user
+    where classes_id = #{classesId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.langying.models.UClassesUserKey" >
+    delete from u_classes_user
+    where classes_id = #{classesId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.UClassesUser" >
+    insert into u_classes_user (classes_id, user_id, group_id, 
+      update_date)
+    values (#{classesId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}, 
+      #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.UClassesUser" >
+    insert into u_classes_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classesId != null" >
+        classes_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="classesId != null" >
+        #{classesId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.UClassesUser" >
+    update u_classes_user
+    <set >
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where classes_id = #{classesId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.UClassesUser" >
+    update u_classes_user
+    set group_id = #{groupId,jdbcType=INTEGER},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where classes_id = #{classesId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

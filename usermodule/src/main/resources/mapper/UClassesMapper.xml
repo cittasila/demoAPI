@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.mapper.UClassesMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.UClasses" >
+    <id column="classes_id" property="classesId" jdbcType="INTEGER" />
+    <result column="school_grade_id" property="schoolGradeId" jdbcType="INTEGER" />
+    <result column="semester_id" property="semesterId" jdbcType="INTEGER" />
+    <result column="classes_name" property="classesName" jdbcType="VARCHAR" />
+    <result column="classes_description" property="classesDescription" jdbcType="VARCHAR" />
+    <result column="classes_build_date" property="classesBuildDate" jdbcType="DATE" />
+  </resultMap>
+  <resultMap id="ResultMapWithNum" type="com.langying.models.UClasses" extends="BaseResultMap" >
+    <result column="studentNum" property="studentNum" jdbcType="INTEGER" />
+    <result column="grade_id" property="gradeId" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    classes_id, school_grade_id, semester_id, classes_name, classes_description, classes_build_date
+  </sql>
+  <sql id="Num_Column_List" >
+    studentNum
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.schoolGradeId != null" >
+         and school_grade_id = #{params.schoolGradeId,jdbcType=INTEGER}
+      </if>
+      <if test="params.semesterId != null" >
+         and semester_id = #{params.semesterId,jdbcType=INTEGER}
+      </if>
+      <if test="params.classesName != null" >
+         and classes_name = #{params.classesName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.classesDescription != null" >
+         and classes_description = #{params.classesDescription,jdbcType=VARCHAR}
+      </if>
+      <if test="params.classesBuildDate != null" >
+         and classes_build_date = #{params.classesBuildDate,jdbcType=DATE}
+      </if>
+      <if test="params.teacherId != null">
+        and classes_id in(select classes_id from u_classes_user where user_id= #{params.teacherId,jdbcType=VARCHAR})
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_classes
+    <include refid="Example_Where_Clause" />
+  </select>
+
+  <select id="selectClassesStudent" resultMap="ResultMapWithNum" >
+      SELECT
+        a.classes_id,
+        a.school_grade_id,
+        a.semester_id,
+        a.classes_name,
+        a.classes_description,
+        a.classes_build_date,
+        COUNT(*) AS studentNum,
+        usg.grade_id
+      FROM
+        u_classes a
+        LEFT JOIN u_classes_user b
+          ON a.classes_id = b.classes_id
+        LEFT JOIN u_user_role c
+          ON c.user_id = b.user_id
+        LEFT JOIN u_school_grade usg
+          ON a.school_grade_id = usg.school_grade_id
+      WHERE c.role_id = 38
+        AND a.classes_id IN
+        (SELECT
+          classes_id
+        FROM
+          u_classes_user
+        WHERE user_id =  #{params.teacherId,jdbcType=VARCHAR})
+      GROUP BY classes_id
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from u_classes
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_classes
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from u_classes
+    where classes_id = #{classesId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from u_classes
+    where classes_id = #{classesId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.UClasses" >
+    <selectKey resultType="java.lang.Integer" keyProperty="classesId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_classes (school_grade_id, semester_id, classes_name, 
+      classes_description, classes_build_date)
+    values (#{schoolGradeId,jdbcType=INTEGER}, #{semesterId,jdbcType=INTEGER}, #{classesName,jdbcType=VARCHAR}, 
+      #{classesDescription,jdbcType=VARCHAR}, #{classesBuildDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.UClasses" >
+    <selectKey resultType="java.lang.Integer" keyProperty="classesId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_classes
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="schoolGradeId != null" >
+        school_grade_id,
+      </if>
+      <if test="semesterId != null" >
+        semester_id,
+      </if>
+      <if test="classesName != null" >
+        classes_name,
+      </if>
+      <if test="classesDescription != null" >
+        classes_description,
+      </if>
+      <if test="classesBuildDate != null" >
+        classes_build_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="schoolGradeId != null" >
+        #{schoolGradeId,jdbcType=INTEGER},
+      </if>
+      <if test="semesterId != null" >
+        #{semesterId,jdbcType=INTEGER},
+      </if>
+      <if test="classesName != null" >
+        #{classesName,jdbcType=VARCHAR},
+      </if>
+      <if test="classesDescription != null" >
+        #{classesDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="classesBuildDate != null" >
+        #{classesBuildDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.UClasses" >
+    update u_classes
+    <set >
+      <if test="schoolGradeId != null" >
+        school_grade_id = #{schoolGradeId,jdbcType=INTEGER},
+      </if>
+      <if test="semesterId != null" >
+        semester_id = #{semesterId,jdbcType=INTEGER},
+      </if>
+      <if test="classesName != null" >
+        classes_name = #{classesName,jdbcType=VARCHAR},
+      </if>
+      <if test="classesDescription != null" >
+        classes_description = #{classesDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="classesBuildDate != null" >
+        classes_build_date = #{classesBuildDate,jdbcType=DATE},
+      </if>
+    </set>
+    where classes_id = #{classesId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.UClasses" >
+    update u_classes
+    set school_grade_id = #{schoolGradeId,jdbcType=INTEGER},
+      semester_id = #{semesterId,jdbcType=INTEGER},
+      classes_name = #{classesName,jdbcType=VARCHAR},
+      classes_description = #{classesDescription,jdbcType=VARCHAR},
+      classes_build_date = #{classesBuildDate,jdbcType=DATE}
+    where classes_id = #{classesId,jdbcType=INTEGER}
+  </update>
+</mapper>

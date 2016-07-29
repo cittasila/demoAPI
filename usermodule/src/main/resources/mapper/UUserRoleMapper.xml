@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.mapper.UUserRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.UUserRoleKey" >
+    <id column="role_id" property="roleId" jdbcType="INTEGER" />
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List">role_id,user_id</sql>
+  <delete id="deleteByPrimaryKey" parameterType="com.langying.models.UUserRoleKey" >
+    delete from u_user_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" />
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_user_role
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from u_user_role
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_user_role
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <insert id="insert" parameterType="com.langying.models.UUserRoleKey" >
+    insert into u_user_role (role_id, user_id)
+    values (#{roleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.UUserRoleKey" >
+    insert into u_user_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

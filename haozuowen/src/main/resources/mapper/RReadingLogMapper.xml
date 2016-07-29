@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.mapper.RReadingLogMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.RReadingLog" >
+    <result column="reading_log_id" property="readingLogId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="book_id" property="bookId" jdbcType="VARCHAR" />
+    <result column="is_finish" property="isFinish" jdbcType="CHAR" />
+    <result column="evaluate_id" property="evaluateId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="CHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_active" property="isActive" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    reading_log_id,user_id,book_id,is_finish,evaluate_id,create_time,update_time,is_active
+  </sql>  <insert id="insert" parameterType="com.langying.models.RReadingLog" >
+    insert into r_reading_log ( user_id, book_id,
+      is_finish, evaluate_id, create_time, 
+      update_time, is_active)
+    values ( #{userId,jdbcType=INTEGER}, #{bookId,jdbcType=VARCHAR},
+      #{isFinish,jdbcType=CHAR}, #{evaluateId,jdbcType=VARCHAR}, #{createTime,jdbcType=CHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{isActive,jdbcType=CHAR})
+  </insert>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.readingLogId != null" >
+         and reading_log_id = #{params.readingLogId,jdbcType=INTEGER}
+      </if>
+      <if test="params.userId != null" >
+         and user_id = #{params.userId,jdbcType=INTEGER}
+      </if>
+      <if test="params.bookId != null" >
+         and book_id = #{params.bookId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.isFinish != null" >
+         and is_finish = #{params.isFinish,jdbcType=CHAR}
+      </if>
+      <if test="params.evaluateId != null" >
+         and evaluate_id = #{params.evaluateId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createTime != null" >
+         and create_time = #{params.createTime,jdbcType=CHAR}
+      </if>
+      <if test="params.updateTime != null" >
+         and update_time = #{params.updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.isActive != null" >
+         and is_active = #{params.isActive,jdbcType=CHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from r_reading_log
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from r_reading_log
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from r_reading_log
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <insert id="insertSelective" parameterType="com.langying.models.RReadingLog" >
+    insert into r_reading_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="isFinish != null" >
+        is_finish,
+      </if>
+      <if test="evaluateId != null" >
+        evaluate_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="readingLogId != null" >
+        #{readingLogId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="isFinish != null" >
+        #{isFinish,jdbcType=CHAR},
+      </if>
+      <if test="evaluateId != null" >
+        #{evaluateId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

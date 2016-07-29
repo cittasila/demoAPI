@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.resourcemapper.TArticleSentenceMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.TArticleSentence" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="articleid" property="articleid" jdbcType="VARCHAR" />
+    <result column="pagenum" property="pagenum" jdbcType="INTEGER" />
+    <result column="pic" property="pic" jdbcType="VARCHAR" />
+    <result column="picpostion" property="picpostion" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="recordingpath" property="recordingpath" jdbcType="VARCHAR" />
+    <result column="part" property="part" jdbcType="INTEGER" />
+    <result column="isrecording" property="isrecording" jdbcType="VARCHAR" />
+    <result column="makerid" property="makerid" jdbcType="VARCHAR" />
+    <result column="makedate" property="makedate" jdbcType="VARCHAR" />
+    <result column="lastupdaterid" property="lastupdaterid" jdbcType="VARCHAR" />
+    <result column="lastupdatedate" property="lastupdatedate" jdbcType="VARCHAR" />
+      <result column="picwidthandheight" property="picwidthandheight" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, articleid, pagenum, pic, picpostion, sort, content, recordingpath, part, isrecording, 
+    makerid, makedate, lastupdaterid, lastupdatedate,picwidthandheight
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.articleid != null" >
+         and articleid = #{params.articleid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.pagenum != null" >
+         and pagenum = #{params.pagenum,jdbcType=INTEGER}
+      </if>
+      <if test="params.pic != null" >
+         and pic = #{params.pic,jdbcType=VARCHAR}
+      </if>
+      <if test="params.picpostion != null" >
+         and picpostion = #{params.picpostion,jdbcType=INTEGER}
+      </if>
+      <if test="params.sort != null" >
+         and sort = #{params.sort,jdbcType=INTEGER}
+      </if>
+      <if test="params.content != null" >
+         and content = #{params.content,jdbcType=VARCHAR}
+      </if>
+      <if test="params.recordingpath != null" >
+         and recordingpath = #{params.recordingpath,jdbcType=VARCHAR}
+      </if>
+      <if test="params.part != null" >
+         and part = #{params.part,jdbcType=INTEGER}
+      </if>
+      <if test="params.isrecording != null" >
+         and isrecording = #{params.isrecording,jdbcType=VARCHAR}
+      </if>
+      <if test="params.makerid != null" >
+         and makerid = #{params.makerid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.makedate != null" >
+         and makedate = #{params.makedate,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastupdaterid != null" >
+         and lastupdaterid = #{params.lastupdaterid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastupdatedate != null" >
+         and lastupdatedate = #{params.lastupdatedate,jdbcType=VARCHAR}
+      </if>
+        <if test="params.picwidthandheight != null" >
+            and picwidthandheight = #{params.picwidthandheight,jdbcType=VARCHAR}
+        </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_article_sentence
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParamsOrderByPartAndSortAsc" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_article_sentence
+    <include refid="Example_Where_Clause" />
+    order by part asc , sort asc
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from t_article_sentence
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_article_sentence
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_article_sentence
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_article_sentence
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.TArticleSentence" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_article_sentence (articleid, pagenum, pic, 
+      picpostion, sort, content, 
+      recordingpath, part, isrecording, 
+      makerid, makedate, lastupdaterid, 
+      lastupdatedate,picwidthandheight)
+    values (#{articleid,jdbcType=VARCHAR}, #{pagenum,jdbcType=INTEGER}, #{pic,jdbcType=VARCHAR}, 
+      #{picpostion,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{recordingpath,jdbcType=VARCHAR}, #{part,jdbcType=INTEGER}, #{isrecording,jdbcType=VARCHAR}, 
+      #{makerid,jdbcType=VARCHAR}, #{makedate,jdbcType=VARCHAR}, #{lastupdaterid,jdbcType=VARCHAR}, 
+      #{lastupdatedate,jdbcType=VARCHAR}, #{picwidthandheight,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.TArticleSentence" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_article_sentence
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="articleid != null" >
+        articleid,
+      </if>
+      <if test="pagenum != null" >
+        pagenum,
+      </if>
+      <if test="pic != null" >
+        pic,
+      </if>
+      <if test="picpostion != null" >
+        picpostion,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="recordingpath != null" >
+        recordingpath,
+      </if>
+      <if test="part != null" >
+        part,
+      </if>
+      <if test="isrecording != null" >
+        isrecording,
+      </if>
+      <if test="makerid != null" >
+        makerid,
+      </if>
+      <if test="makedate != null" >
+        makedate,
+      </if>
+      <if test="lastupdaterid != null" >
+        lastupdaterid,
+      </if>
+      <if test="lastupdatedate != null" >
+        lastupdatedate,
+      </if>
+        <if test="picwidthandheight != null" >
+            picwidthandheight,
+        </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="articleid != null" >
+        #{articleid,jdbcType=VARCHAR},
+      </if>
+      <if test="pagenum != null" >
+        #{pagenum,jdbcType=INTEGER},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="picpostion != null" >
+        #{picpostion,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="recordingpath != null" >
+        #{recordingpath,jdbcType=VARCHAR},
+      </if>
+      <if test="part != null" >
+        #{part,jdbcType=INTEGER},
+      </if>
+      <if test="isrecording != null" >
+        #{isrecording,jdbcType=VARCHAR},
+      </if>
+      <if test="makerid != null" >
+        #{makerid,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null" >
+        #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdaterid != null" >
+        #{lastupdaterid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatedate != null" >
+        #{lastupdatedate,jdbcType=VARCHAR},
+      </if>
+    <if test="picwidthandheight != null" >
+        #{picwidthandheight,jdbcType=VARCHAR},
+    </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.TArticleSentence" >
+    update t_article_sentence
+    <set >
+      <if test="articleid != null" >
+        articleid = #{articleid,jdbcType=VARCHAR},
+      </if>
+      <if test="pagenum != null" >
+        pagenum = #{pagenum,jdbcType=INTEGER},
+      </if>
+      <if test="pic != null" >
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="picpostion != null" >
+        picpostion = #{picpostion,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="recordingpath != null" >
+        recordingpath = #{recordingpath,jdbcType=VARCHAR},
+      </if>
+      <if test="part != null" >
+        part = #{part,jdbcType=INTEGER},
+      </if>
+      <if test="isrecording != null" >
+        isrecording = #{isrecording,jdbcType=VARCHAR},
+      </if>
+      <if test="makerid != null" >
+        makerid = #{makerid,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null" >
+        makedate = #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdaterid != null" >
+        lastupdaterid = #{lastupdaterid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatedate != null" >
+        lastupdatedate = #{lastupdatedate,jdbcType=VARCHAR},
+      </if>
+        <if test="picwidthandheight != null" >
+            picwidthandheight = #{picwidthandheight,jdbcType=VARCHAR},
+        </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.TArticleSentence" >
+    update t_article_sentence
+    set articleid = #{articleid,jdbcType=VARCHAR},
+      pagenum = #{pagenum,jdbcType=INTEGER},
+      pic = #{pic,jdbcType=VARCHAR},
+      picpostion = #{picpostion,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      recordingpath = #{recordingpath,jdbcType=VARCHAR},
+      part = #{part,jdbcType=INTEGER},
+      isrecording = #{isrecording,jdbcType=VARCHAR},
+      makerid = #{makerid,jdbcType=VARCHAR},
+      makedate = #{makedate,jdbcType=VARCHAR},
+      lastupdaterid = #{lastupdaterid,jdbcType=VARCHAR},
+      lastupdatedate = #{lastupdatedate,jdbcType=VARCHAR},
+      picwidthandheight= #{picwidthandheight,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

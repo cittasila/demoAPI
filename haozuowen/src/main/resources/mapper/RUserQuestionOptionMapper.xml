@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.mapper.RUserQuestionOptionMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.RUserQuestionOption" >
+    <id column="user_doquestion_option_id" property="userDoquestionOptionId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_doquestion_id" property="userDoquestionId" jdbcType="INTEGER" />
+    <result column="user_option_id" property="userOptionId" jdbcType="VARCHAR" />
+    <result column="isright" property="isright" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="CHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_active" property="isActive" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_doquestion_option_id, user_id, user_doquestion_id, user_option_id, isright, 
+    create_time, update_time, is_active
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.userId != null" >
+         and user_id = #{params.userId,jdbcType=INTEGER}
+      </if>
+      <if test="params.userDoquestionId != null" >
+         and user_doquestion_id = #{params.userDoquestionId,jdbcType=INTEGER}
+      </if>
+      <if test="params.userOptionId != null" >
+         and user_option_id = #{params.userOptionId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.isright != null" >
+         and isright = #{params.isright,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createTime != null" >
+         and create_time = #{params.createTime,jdbcType=CHAR}
+      </if>
+      <if test="params.updateTime != null" >
+         and update_time = #{params.updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.isActive != null" >
+         and is_active = #{params.isActive,jdbcType=CHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from r_user_question_option
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from r_user_question_option
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from r_user_question_option
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from r_user_question_option
+    where user_doquestion_option_id = #{userDoquestionOptionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from r_user_question_option
+    where user_doquestion_option_id = #{userDoquestionOptionId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.RUserQuestionOption" >
+    <selectKey resultType="java.lang.Integer" keyProperty="userDoquestionOptionId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into r_user_question_option (user_id, user_doquestion_id, user_option_id, 
+      isright, create_time, update_time, 
+      is_active)
+    values (#{userId,jdbcType=INTEGER}, #{userDoquestionId,jdbcType=INTEGER}, #{userOptionId,jdbcType=VARCHAR}, 
+      #{isright,jdbcType=VARCHAR}, #{createTime,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{isActive,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.RUserQuestionOption" >
+    <selectKey resultType="java.lang.Integer" keyProperty="userDoquestionOptionId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into r_user_question_option
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userDoquestionId != null" >
+        user_doquestion_id,
+      </if>
+      <if test="userOptionId != null" >
+        user_option_id,
+      </if>
+      <if test="isright != null" >
+        isright,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userDoquestionId != null" >
+        #{userDoquestionId,jdbcType=INTEGER},
+      </if>
+      <if test="userOptionId != null" >
+        #{userOptionId,jdbcType=VARCHAR},
+      </if>
+      <if test="isright != null" >
+        #{isright,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.RUserQuestionOption" >
+    update r_user_question_option
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userDoquestionId != null" >
+        user_doquestion_id = #{userDoquestionId,jdbcType=INTEGER},
+      </if>
+      <if test="userOptionId != null" >
+        user_option_id = #{userOptionId,jdbcType=VARCHAR},
+      </if>
+      <if test="isright != null" >
+        isright = #{isright,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=CHAR},
+      </if>
+    </set>
+    where user_doquestion_option_id = #{userDoquestionOptionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.RUserQuestionOption" >
+    update r_user_question_option
+    set user_id = #{userId,jdbcType=INTEGER},
+      user_doquestion_id = #{userDoquestionId,jdbcType=INTEGER},
+      user_option_id = #{userOptionId,jdbcType=VARCHAR},
+      isright = #{isright,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=CHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_active = #{isActive,jdbcType=CHAR}
+    where user_doquestion_option_id = #{userDoquestionOptionId,jdbcType=INTEGER}
+  </update>
+
+    <!-- 查询当前正在做的那套习题中用户已经完成的习题数量 -->
+    <select id="queryUserFinishedRightCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+        SELECT
+            COUNT(ruqo.user_doquestion_option_id) AS user_do_right_num
+        FROM
+            r_user_doquestion rud
+        LEFT JOIN r_user_question_option ruqo ON rud.user_doquestion_id = ruqo.user_doquestion_id
+        WHERE rud.user_id = #{userId,jdbcType=INTEGER} AND rud.book_id = #{bookId,jdbcType=VARCHAR}
+        AND rud.is_active = '1' AND  ruqo.isright = '1'
+    </select>
+</mapper>

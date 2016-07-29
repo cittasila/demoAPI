@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.mapper.USemesterMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.USemester" >
+    <id column="semester_id" property="semesterId" jdbcType="INTEGER" />
+    <result column="semester_name" property="semesterName" jdbcType="VARCHAR" />
+    <result column="semester_level" property="semesterLevel" jdbcType="CHAR" />
+    <result column="semester_begin_date" property="semesterBeginDate" jdbcType="TIMESTAMP" />
+    <result column="semester_end_date" property="semesterEndDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    semester_id, semester_name, semester_level, semester_begin_date, semester_end_date
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.semesterName != null" >
+         and semester_name = #{params.semesterName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.semesterLevel != null" >
+         and semester_level = #{params.semesterLevel,jdbcType=CHAR}
+      </if>
+      <if test="params.semesterBeginDate != null" >
+         and semester_begin_date = #{params.semesterBeginDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.semesterEndDate != null" >
+         and semester_end_date = #{params.semesterEndDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.currentTime!=null">
+      and semester_level=0 and SYSDATE()>semester_begin_date and  semester_end_date>SYSDATE() LIMIT 0,1
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_semester
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from u_semester
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_semester
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from u_semester
+    where semester_id = #{semesterId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from u_semester
+    where semester_id = #{semesterId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.USemester" >
+    insert into u_semester (semester_id, semester_name, semester_level, 
+      semester_begin_date, semester_end_date)
+    values (#{semesterId,jdbcType=INTEGER}, #{semesterName,jdbcType=VARCHAR}, #{semesterLevel,jdbcType=CHAR}, 
+      #{semesterBeginDate,jdbcType=TIMESTAMP}, #{semesterEndDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.USemester" >
+    insert into u_semester
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="semesterId != null" >
+        semester_id,
+      </if>
+      <if test="semesterName != null" >
+        semester_name,
+      </if>
+      <if test="semesterLevel != null" >
+        semester_level,
+      </if>
+      <if test="semesterBeginDate != null" >
+        semester_begin_date,
+      </if>
+      <if test="semesterEndDate != null" >
+        semester_end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="semesterId != null" >
+        #{semesterId,jdbcType=INTEGER},
+      </if>
+      <if test="semesterName != null" >
+        #{semesterName,jdbcType=VARCHAR},
+      </if>
+      <if test="semesterLevel != null" >
+        #{semesterLevel,jdbcType=CHAR},
+      </if>
+      <if test="semesterBeginDate != null" >
+        #{semesterBeginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="semesterEndDate != null" >
+        #{semesterEndDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.USemester" >
+    update u_semester
+    <set >
+      <if test="semesterName != null" >
+        semester_name = #{semesterName,jdbcType=VARCHAR},
+      </if>
+      <if test="semesterLevel != null" >
+        semester_level = #{semesterLevel,jdbcType=CHAR},
+      </if>
+      <if test="semesterBeginDate != null" >
+        semester_begin_date = #{semesterBeginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="semesterEndDate != null" >
+        semester_end_date = #{semesterEndDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where semester_id = #{semesterId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.USemester" >
+    update u_semester
+    set semester_name = #{semesterName,jdbcType=VARCHAR},
+      semester_level = #{semesterLevel,jdbcType=CHAR},
+      semester_begin_date = #{semesterBeginDate,jdbcType=TIMESTAMP},
+      semester_end_date = #{semesterEndDate,jdbcType=TIMESTAMP}
+    where semester_id = #{semesterId,jdbcType=INTEGER}
+  </update>
+</mapper>

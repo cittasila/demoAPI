@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.resourcemapper.TQuestionOptionMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.TQuestionOption" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="questionid" property="questionid" jdbcType="VARCHAR" />
+    <result column="questionoption" property="questionoption" jdbcType="VARCHAR" />
+    <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="answerpath" property="answerpath" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="makerid" property="makerid" jdbcType="VARCHAR" />
+    <result column="makedate" property="makedate" jdbcType="VARCHAR" />
+    <result column="lastupdaterid" property="lastupdaterid" jdbcType="VARCHAR" />
+    <result column="lastupdatedate" property="lastupdatedate" jdbcType="VARCHAR" />
+      <result column="question" property="question" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, questionid, questionoption, answer, answerpath, status, makerid, makedate, lastupdaterid, 
+    lastupdatedate
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.questionid != null" >
+         and questionid = #{params.questionid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.questionoption != null" >
+         and questionoption = #{params.questionoption,jdbcType=VARCHAR}
+      </if>
+      <if test="params.answer != null" >
+         and answer = #{params.answer,jdbcType=VARCHAR}
+      </if>
+      <if test="params.answerpath != null" >
+         and answerpath = #{params.answerpath,jdbcType=VARCHAR}
+      </if>
+      <if test="params.status != null" >
+         and status = #{params.status,jdbcType=VARCHAR}
+      </if>
+      <if test="params.makerid != null" >
+         and makerid = #{params.makerid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.makedate != null" >
+         and makedate = #{params.makedate,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastupdaterid != null" >
+         and lastupdaterid = #{params.lastupdaterid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastupdatedate != null" >
+         and lastupdatedate = #{params.lastupdatedate,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_question_option
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from t_question_option
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_question_option
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+    <select id="selectListWithQuestionInfoByParams" resultType="list" resultMap="BaseResultMap" >
+        select a.*,b.question from t_question_option a INNER JOIN t_question_info b on a.questionid =b.id
+        <trim prefix="where" prefixOverrides="and|or" >
+            <if test="params.articleid != null" >
+                and  b.articleid = #{params.articleid,jdbcType=VARCHAR}
+            </if>
+            <if test="params.status != null" >
+                and a.status = #{params.status,jdbcType=VARCHAR}
+            </if>
+        </trim>
+        <if test="orderParam != null" >
+            order by ${orderParam}
+        </if>
+    </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_question_option
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_question_option
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.TQuestionOption" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_question_option (questionid, questionoption, answer, 
+      answerpath, status, makerid, 
+      makedate, lastupdaterid, lastupdatedate
+      )
+    values (#{questionid,jdbcType=VARCHAR}, #{questionoption,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
+      #{answerpath,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{makerid,jdbcType=VARCHAR}, 
+      #{makedate,jdbcType=VARCHAR}, #{lastupdaterid,jdbcType=VARCHAR}, #{lastupdatedate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.TQuestionOption" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_question_option
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="questionid != null" >
+        questionid,
+      </if>
+      <if test="questionoption != null" >
+        questionoption,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+      <if test="answerpath != null" >
+        answerpath,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="makerid != null" >
+        makerid,
+      </if>
+      <if test="makedate != null" >
+        makedate,
+      </if>
+      <if test="lastupdaterid != null" >
+        lastupdaterid,
+      </if>
+      <if test="lastupdatedate != null" >
+        lastupdatedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="questionid != null" >
+        #{questionid,jdbcType=VARCHAR},
+      </if>
+      <if test="questionoption != null" >
+        #{questionoption,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="answerpath != null" >
+        #{answerpath,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="makerid != null" >
+        #{makerid,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null" >
+        #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdaterid != null" >
+        #{lastupdaterid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatedate != null" >
+        #{lastupdatedate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.TQuestionOption" >
+    update t_question_option
+    <set >
+      <if test="questionid != null" >
+        questionid = #{questionid,jdbcType=VARCHAR},
+      </if>
+      <if test="questionoption != null" >
+        questionoption = #{questionoption,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="answerpath != null" >
+        answerpath = #{answerpath,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="makerid != null" >
+        makerid = #{makerid,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null" >
+        makedate = #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdaterid != null" >
+        lastupdaterid = #{lastupdaterid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatedate != null" >
+        lastupdatedate = #{lastupdatedate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.TQuestionOption" >
+    update t_question_option
+    set questionid = #{questionid,jdbcType=VARCHAR},
+      questionoption = #{questionoption,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      answerpath = #{answerpath,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      makerid = #{makerid,jdbcType=VARCHAR},
+      makedate = #{makedate,jdbcType=VARCHAR},
+      lastupdaterid = #{lastupdaterid,jdbcType=VARCHAR},
+      lastupdatedate = #{lastupdatedate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

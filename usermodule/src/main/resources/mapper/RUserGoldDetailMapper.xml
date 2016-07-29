@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.mapper.RUserGoldDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.RUserGoldDetail" >
+    <id column="user_gold_detail_id" property="userGoldDetailId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="gold_change" property="goldChange" jdbcType="INTEGER" />
+    <result column="detail_type" property="detailType" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="is_active" property="isActive" jdbcType="CHAR" />
+    <result column="basic_gold" property="basicGold" jdbcType="INTEGER" />
+    <result column="gold_order_id" property="goldOrderId" jdbcType="INTEGER" />
+    <result column="book_id" property="bookId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_gold_detail_id, user_id, gold_change, detail_type, create_time, is_active, basic_gold, 
+    gold_order_id,book_id
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.userId != null" >
+         and user_id = #{params.userId,jdbcType=INTEGER}
+      </if>
+      <if test="params.goldChange != null" >
+         and gold_change = #{params.goldChange,jdbcType=INTEGER}
+      </if>
+      <if test="params.detailType != null" >
+         and detail_type = #{params.detailType,jdbcType=CHAR}
+      </if>
+      <if test="params.createTime != null" >
+         and create_time = #{params.createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.isActive != null" >
+         and is_active = #{params.isActive,jdbcType=CHAR}
+      </if>
+      <if test="params.basicGold != null" >
+         and basic_gold = #{params.basicGold,jdbcType=INTEGER}
+      </if>
+      <if test="params.goldOrderId != null" >
+         and gold_order_id = #{params.goldOrderId,jdbcType=INTEGER}
+      </if>
+      <if test="params.bookId != null" >
+        and book_id = #{params.bookId,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from r_user_gold_detail
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from r_user_gold_detail
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from r_user_gold_detail
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from r_user_gold_detail
+    where user_gold_detail_id = #{userGoldDetailId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from r_user_gold_detail
+    where user_gold_detail_id = #{userGoldDetailId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.RUserGoldDetail" >
+    <selectKey resultType="java.lang.Integer" keyProperty="userGoldDetailId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into r_user_gold_detail (user_id, gold_change, detail_type, 
+      create_time, is_active, basic_gold, 
+      gold_order_id,book_id)
+    values (#{userId,jdbcType=INTEGER}, #{goldChange,jdbcType=INTEGER}, #{detailType,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{isActive,jdbcType=CHAR}, #{basicGold,jdbcType=INTEGER}, 
+      #{goldOrderId,jdbcType=INTEGER},#{bookId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.RUserGoldDetail" >
+    <selectKey resultType="java.lang.Integer" keyProperty="userGoldDetailId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into r_user_gold_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="goldChange != null" >
+        gold_change,
+      </if>
+      <if test="detailType != null" >
+        detail_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+      <if test="basicGold != null" >
+        basic_gold,
+      </if>
+      <if test="goldOrderId != null" >
+        gold_order_id,
+      </if>
+      <if test="bookId != null" >
+        book_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="goldChange != null" >
+        #{goldChange,jdbcType=INTEGER},
+      </if>
+      <if test="detailType != null" >
+        #{detailType,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=CHAR},
+      </if>
+      <if test="basicGold != null" >
+        #{basicGold,jdbcType=INTEGER},
+      </if>
+      <if test="goldOrderId != null" >
+        #{goldOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.RUserGoldDetail" >
+    update r_user_gold_detail
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="goldChange != null" >
+        gold_change = #{goldChange,jdbcType=INTEGER},
+      </if>
+      <if test="detailType != null" >
+        detail_type = #{detailType,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=CHAR},
+      </if>
+      <if test="basicGold != null" >
+        basic_gold = #{basicGold,jdbcType=INTEGER},
+      </if>
+      <if test="goldOrderId != null" >
+        gold_order_id = #{goldOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null" >
+        book_id = #{bookId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_gold_detail_id = #{userGoldDetailId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.RUserGoldDetail" >
+    update r_user_gold_detail
+    set user_id = #{userId,jdbcType=INTEGER},
+      gold_change = #{goldChange,jdbcType=INTEGER},
+      detail_type = #{detailType,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_active = #{isActive,jdbcType=CHAR},
+      basic_gold = #{basicGold,jdbcType=INTEGER},
+      gold_order_id = #{goldOrderId,jdbcType=INTEGER},
+      book_id = #{bookId,jdbcType=VARCHAR}
+    where user_gold_detail_id = #{userGoldDetailId,jdbcType=INTEGER}
+  </update>
+</mapper>

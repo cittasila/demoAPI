@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.resourcemapper.TArticletopicRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.TArticletopicRelation" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="articleid" property="articleid" jdbcType="VARCHAR" />
+    <result column="topicid" property="topicid" jdbcType="VARCHAR" />
+    <result column="makerid" property="makerid" jdbcType="VARCHAR" />
+    <result column="makedate" property="makedate" jdbcType="VARCHAR" />
+    <result column="lastupdaterid" property="lastupdaterid" jdbcType="VARCHAR" />
+    <result column="lastupdatedate" property="lastupdatedate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, articleid, topicid, makerid, makedate, lastupdaterid, lastupdatedate
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.articleid != null" >
+         and articleid = #{params.articleid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.topicid != null" >
+         and topicid = #{params.topicid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.makerid != null" >
+         and makerid = #{params.makerid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.makedate != null" >
+         and makedate = #{params.makedate,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastupdaterid != null" >
+         and lastupdaterid = #{params.lastupdaterid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastupdatedate != null" >
+         and lastupdatedate = #{params.lastupdatedate,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_articletopic_relation
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from t_articletopic_relation
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_articletopic_relation
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_articletopic_relation
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_articletopic_relation
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.TArticletopicRelation" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_articletopic_relation (articleid, topicid, makerid, 
+      makedate, lastupdaterid, lastupdatedate
+      )
+    values (#{articleid,jdbcType=VARCHAR}, #{topicid,jdbcType=VARCHAR}, #{makerid,jdbcType=VARCHAR}, 
+      #{makedate,jdbcType=VARCHAR}, #{lastupdaterid,jdbcType=VARCHAR}, #{lastupdatedate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.TArticletopicRelation" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_articletopic_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="articleid != null" >
+        articleid,
+      </if>
+      <if test="topicid != null" >
+        topicid,
+      </if>
+      <if test="makerid != null" >
+        makerid,
+      </if>
+      <if test="makedate != null" >
+        makedate,
+      </if>
+      <if test="lastupdaterid != null" >
+        lastupdaterid,
+      </if>
+      <if test="lastupdatedate != null" >
+        lastupdatedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="articleid != null" >
+        #{articleid,jdbcType=VARCHAR},
+      </if>
+      <if test="topicid != null" >
+        #{topicid,jdbcType=VARCHAR},
+      </if>
+      <if test="makerid != null" >
+        #{makerid,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null" >
+        #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdaterid != null" >
+        #{lastupdaterid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatedate != null" >
+        #{lastupdatedate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.TArticletopicRelation" >
+    update t_articletopic_relation
+    <set >
+      <if test="articleid != null" >
+        articleid = #{articleid,jdbcType=VARCHAR},
+      </if>
+      <if test="topicid != null" >
+        topicid = #{topicid,jdbcType=VARCHAR},
+      </if>
+      <if test="makerid != null" >
+        makerid = #{makerid,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null" >
+        makedate = #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdaterid != null" >
+        lastupdaterid = #{lastupdaterid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatedate != null" >
+        lastupdatedate = #{lastupdatedate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.TArticletopicRelation" >
+    update t_articletopic_relation
+    set articleid = #{articleid,jdbcType=VARCHAR},
+      topicid = #{topicid,jdbcType=VARCHAR},
+      makerid = #{makerid,jdbcType=VARCHAR},
+      makedate = #{makedate,jdbcType=VARCHAR},
+      lastupdaterid = #{lastupdaterid,jdbcType=VARCHAR},
+      lastupdatedate = #{lastupdatedate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

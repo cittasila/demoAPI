@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.mapper.RBookLexileMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.RBookLexile" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="Lexilelevel" property="lexilelevel" jdbcType="VARCHAR" />
+    <result column="minLexile" property="minlexile" jdbcType="INTEGER" />
+    <result column="maxLexile" property="maxlexile" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, Lexilelevel, minLexile, maxLexile
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.lexilelevel != null" >
+         and Lexilelevel = #{params.lexilelevel,jdbcType=VARCHAR}
+      </if>
+      <if test="params.minlexile != null" >
+         and minLexile = #{params.minlexile,jdbcType=INTEGER}
+      </if>
+      <if test="params.maxlexile != null" >
+         and maxLexile = #{params.maxlexile,jdbcType=INTEGER}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from r_book_lexile
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from r_book_lexile
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from r_book_lexile
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from r_book_lexile
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from r_book_lexile
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.RBookLexile" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into r_book_lexile (id, Lexilelevel, minLexile, 
+      maxLexile)
+    values (#{id,jdbcType=INTEGER}, #{lexilelevel,jdbcType=VARCHAR}, #{minlexile,jdbcType=INTEGER}, 
+      #{maxlexile,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.RBookLexile" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into r_book_lexile
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      id,
+      <if test="lexilelevel != null" >
+        Lexilelevel,
+      </if>
+      <if test="minlexile != null" >
+        minLexile,
+      </if>
+      <if test="maxlexile != null" >
+        maxLexile,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=INTEGER},
+      <if test="lexilelevel != null" >
+        #{lexilelevel,jdbcType=VARCHAR},
+      </if>
+      <if test="minlexile != null" >
+        #{minlexile,jdbcType=INTEGER},
+      </if>
+      <if test="maxlexile != null" >
+        #{maxlexile,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.RBookLexile" >
+    update r_book_lexile
+    <set >
+      <if test="lexilelevel != null" >
+        Lexilelevel = #{lexilelevel,jdbcType=VARCHAR},
+      </if>
+      <if test="minlexile != null" >
+        minLexile = #{minlexile,jdbcType=INTEGER},
+      </if>
+      <if test="maxlexile != null" >
+        maxLexile = #{maxlexile,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.RBookLexile" >
+    update r_book_lexile
+    set Lexilelevel = #{lexilelevel,jdbcType=VARCHAR},
+      minLexile = #{minlexile,jdbcType=INTEGER},
+      maxLexile = #{maxlexile,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

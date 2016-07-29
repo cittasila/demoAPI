@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.mapper.HzwReportMapper" >
+  <select id="essayList" resultType="java.util.HashMap">
+select a.assignment_id assignmentId,c.essay_set_title essaySetTitle from t_assignment a LEFT JOIN t_essay b on a.essay_id=b.essay_id LEFT JOIN t_essay_set c on c.essay_set_id=b.essay_set_id
+where c.essay_set_id in(${essayList}) and a.assignment_status>=1 and a.user_id= #{userId,jdbcType=INTEGER}
+  </select>
+
+  <select id="errorList" resultType="java.util.HashMap">
+    select rule_id,count(*) count from( SELECT DISTINCT a.rule_id,CONCAT(a.error_content_pre,a.error_content,a.error_content_suf)
+from t_assignment_error a left join
+t_assignment_history b
+ on a.assignment_history_id=b.assignment_history_id
+where b.assignment_id= #{assignmentId,jdbcType=INTEGER}) a GROUP BY rule_id ORDER BY count desc LIMIT 0,8
+  </select>
+    <!-- 查询系统评分 -->
+   <select id="getRcoreCommentByAssignmentId" resultType="com.langying.models.RcoreComment">
+        SELECT
+            c.comment_ch,
+            c.comment_en
+        FROM
+            t_assignment a
+        LEFT JOIN t_assignment_history b ON a.assignment_history_id = b.assignment_history_id
+        LEFT JOIN s_score_engine_dict c ON b.assignment_history_system_hol = c.score
+        AND c.score_type = 'HOL'
+        WHERE
+            a.assignment_id = #{assignmentId,jdbcType=INTEGER}
+
+    </select>
+    <!-- 查询教师评分的总分 -->
+    <select id="getAssignmentMarkSumByAssignmentId" resultType="java.lang.Float">
+        SELECT
+            a.assignment_mark_sum
+        FROM
+            t_assignment a
+        WHERE
+            a.assignment_id = #{assignmentId,jdbcType=INTEGER}
+
+    </select>
+    <!-- 查询评分标准 -->
+    <select id="getStandardById" resultType="com.langying.models.ScoreStandard">
+        SELECT
+        g.grade_name AS grade_name,
+        sg.score_standard_zh AS score_standard_zh
+        FROM
+        u_classes c
+        LEFT JOIN u_school_grade sg ON c.school_grade_id = sg.school_grade_id
+        LEFT JOIN u_grade g ON sg.grade_id = g.grade_id
+        WHERE
+        c.classes_id = #{classid,jdbcType=INTEGER}
+    </select>
+    <!-- 查询教师评分的班级平均总分 -->
+    <select id="getAVGAssignmentMarkSumByAssignmentId" resultType="java.lang.Float">
+       SELECT
+        ROUND(
+            AVG(a.assignment_mark_sum),
+            2
+        ) AS assignment_mark_sum_avg
+
+		FROM
+            t_assignment a
+        WHERE
+            a.essay_id =(select essay_id from t_assignment b where b.assignment_id=#{assignmentId,jdbcType=INTEGER})
+        AND a.classes_id = #{classid,jdbcType=INTEGER} GROUP BY a.classes_id
+
+    </select>
+
+	<select id="getEssayTitleAndRequirement" resultType="java.util.HashMap">
+        SELECT
+            c.essay_set_title,c.essay_set_requirement
+        FROM
+            t_assignment a
+        LEFT JOIN
+            t_essay b ON a.essay_id=b.essay_id
+        LEFT JOIN
+            t_essay_set c ON b.essay_set_id=c.essay_set_id
+        WHERE
+            a.assignment_id = #{assignmentId,jdbcType=INTEGER}
+    </select>
+
+    <select id="getAssignmentInfoByAssignmentId" resultType="java.util.HashMap">
+        select
+            a.assignment_history_word_count,a.assignment_history_time,b.assignment_history_content
+        from
+            t_assignment_history a
+        left join
+            t_assignment_content b on a.assignment_history_id=b.assignment_history_id
+        where
+            a.assignment_id=#{assignmentId,jdbcType=INTEGER}
+    </select>
+
+    <select id="getTeacherNameByAssignmentId" resultType="java.util.HashMap">
+        SELECT
+            c.user_real_name
+        FROM
+            t_assignment a
+        left JOIN
+            t_essay b on a.essay_id=b.essay_id
+        left join
+            u_user c on b.user_id=c.user_id
+        where
+            a.assignment_id=#{assignmentId,jdbcType=INTEGER}
+    </select>
+
+    <select id="getAssignmentPoint" resultType="java.util.HashMap">
+        SELECT
+            MAX(assignment_history_sub_date),
+            AVG(assignment_history_system_org) org,
+            AVG(assignment_history_system_dev) dev,
+            AVG(assignment_history_system_ss) ss,
+            AVG(assignment_history_system_wc) wc,
+            AVG(assignment_history_system_mech) mech,
+            AVG(assignment_history_mark1) content,
+            AVG(assignment_history_mark2) language,
+            AVG(assignment_history_mark3) constuction
+        FROM
+            t_assignment_history
+        where
+            assignment_id in (${assignmentId})
+        AND	assignment_history_system_org IS NOT NULL
+        AND	assignment_history_system_dev IS NOT NULL
+        AND	assignment_history_system_ss IS NOT NULL
+        AND	assignment_history_system_wc IS NOT NULL
+        AND	assignment_history_system_mech IS NOT NULL
+        AND	assignment_history_mark1 IS NOT NULL
+        AND	assignment_history_mark2 IS NOT NULL
+        AND	assignment_history_mark3 IS NOT NULL
+    </select>
+    <select id="getAssignmentInfoBySameClass" resultType="java.util.HashMap">
+        select
+            a.assignment_id
+        from
+            t_assignment a
+        where
+            a.classes_id in (select b.classes_id from t_assignment b where b.assignment_id = #{assignmentId,jdbcType=INTEGER})
+        and
+            a.essay_id in (select c.essay_id from t_assignment c  where c.assignment_id = #{assignmentId,jdbcType=INTEGER})
+        ORDER BY
+            a.user_id asc
+    </select>
+    <select id="getAssignmentInfoBySameGrade" resultType="java.util.HashMap">
+       select
+		    a.assignment_id
+       from
+		    t_assignment a
+       where
+		    a.classes_id in (
+			    select d.classes_id from u_classes d where d.school_grade_id in (
+			        select e.school_grade_id from u_classes e where e.classes_id in (
+			            select b.classes_id from t_assignment b where b.assignment_id = #{assignmentId,jdbcType=INTEGER}
+                    )
+                )
+		    )
+       and
+		    a.essay_id in (select c.essay_id from t_assignment c  where c.assignment_id = #{assignmentId,jdbcType=INTEGER})
+       ORDER BY
+		    a.user_id asc
+    </select>
+    <select id="getSubmitCount" resultType="java.util.HashMap">
+        SELECT
+        count(assignment_id) subCount
+        FROM
+        t_assignment_history
+        where
+        assignment_id in (${assignmentId})
+        AND	assignment_history_state !='0'
+    </select>
+</mapper>

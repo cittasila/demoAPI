@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.langying.controller.mapper.USchoolMapper">
+  <resultMap id="BaseResultMap" type="com.langying.models.USchool">
+    <id column="school_id" jdbcType="INTEGER" property="schoolId" />
+    <result column="dist_cd" jdbcType="CHAR" property="distCd" />
+    <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+    <result column="school_type" jdbcType="CHAR" property="schoolType" />
+    <result column="material" jdbcType="VARCHAR" property="material" />
+    <result column="prefix_code" jdbcType="VARCHAR" property="prefixCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    school_id, dist_cd, school_name, school_type, material, prefix_code
+  </sql>
+  <sql id="Example_Where_Clause">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test="params.distCd != null">
+        and dist_cd = #{params.distCd,jdbcType=CHAR}
+      </if>
+      <if test="params.schoolName != null">
+        and school_name = #{params.schoolName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.schoolType != null">
+        and school_type = #{params.schoolType,jdbcType=CHAR}
+      </if>
+      <if test="params.material != null">
+        and material = #{params.material,jdbcType=VARCHAR}
+      </if>
+      <if test="params.prefixCode != null">
+        and prefix_code = #{params.prefixCode,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from u_school
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int">
+    select count(*) from u_school
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultMap="BaseResultMap" resultType="list">
+    select
+    <include refid="Base_Column_List" />
+    from u_school
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null">
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from u_school
+    where school_id = #{schoolId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from u_school
+    where school_id = #{schoolId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.USchool">
+    <selectKey keyProperty="schoolId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_school (dist_cd, school_name, school_type,
+    material, prefix_code)
+    values (#{distCd,jdbcType=CHAR}, #{schoolName,jdbcType=VARCHAR}, #{schoolType,jdbcType=CHAR},
+    #{material,jdbcType=VARCHAR}, #{prefixCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.USchool">
+    <selectKey keyProperty="schoolId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_school
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="distCd != null">
+        dist_cd,
+      </if>
+      <if test="schoolName != null">
+        school_name,
+      </if>
+      <if test="schoolType != null">
+        school_type,
+      </if>
+      <if test="material != null">
+        material,
+      </if>
+      <if test="prefixCode != null">
+        prefix_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="distCd != null">
+        #{distCd,jdbcType=CHAR},
+      </if>
+      <if test="schoolName != null">
+        #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolType != null">
+        #{schoolType,jdbcType=CHAR},
+      </if>
+      <if test="material != null">
+        #{material,jdbcType=VARCHAR},
+      </if>
+      <if test="prefixCode != null">
+        #{prefixCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.USchool">
+    update u_school
+    <set>
+      <if test="distCd != null">
+        dist_cd = #{distCd,jdbcType=CHAR},
+      </if>
+      <if test="schoolName != null">
+        school_name = #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolType != null">
+        school_type = #{schoolType,jdbcType=CHAR},
+      </if>
+      <if test="material != null">
+        material = #{material,jdbcType=VARCHAR},
+      </if>
+      <if test="prefixCode != null">
+        prefix_code = #{prefixCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where school_id = #{schoolId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.USchool">
+    update u_school
+    set dist_cd = #{distCd,jdbcType=CHAR},
+      school_name = #{schoolName,jdbcType=VARCHAR},
+      school_type = #{schoolType,jdbcType=CHAR},
+      material = #{material,jdbcType=VARCHAR},
+      prefix_code = #{prefixCode,jdbcType=VARCHAR}
+    where school_id = #{schoolId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

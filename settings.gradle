@@ -1,0 +1,7 @@
+rootProject.name = 'langyingapi'
+include 'common'
+include 'usermodule'
+include 'lyresource'
+include 'payment'
+include 'haozuowen'
+

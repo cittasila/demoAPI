@@ -1,0 +1,89 @@
+group 'langyingapi'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+sourceCompatibility = 1.7
+buildscript {
+    ext {
+        springBootVersion = '1.3.0.RELEASE'
+    }
+    repositories {
+        mavenLocal()
+        jcenter()
+        mavenCentral()
+        maven { url "http://repo.spring.io/release" }
+        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+    }
+}
+
+ext{
+    logback_version="1.1.3"
+    groovy_version="2.4.4"
+    spring_version="4.2.3.RELEASE"
+    springSession_version="1.0.2.RELEASE"
+    slf4j_version="1.7.2"
+    aspectj_version="1.7.1"
+    beanutils_version="1.8.3"
+    collections_version="3.2.1"
+    aspectjweaver_version="1.7.1"
+    asm_version="3.1"
+    cglib_version="2.2"
+    mysql_connector_version="5.1.38"
+    druid_version="1.0.10"
+    mybatis_version="3.3.0"
+    mybatis_spring_version="1.2.3"
+    jackson_version="2.6.3"
+    dom4j_version="1.6.1"
+    commonscodec_version ="1.10"
+    poi_version="3.11"
+    springfox_version="2.0.3"
+    commonscodec_version ="1.10"
+
+}
+
+dependencies {
+    compile(
+            "ch.qos.logback:logback-access:${logback_version}",
+            "ch.qos.logback:logback-classic:${logback_version}",
+            "org.codehaus.groovy:groovy-all:${groovy_version}",
+            "org.springframework:spring-beans:${spring_version}",
+            "org.springframework:spring-web:${spring_version}",
+            "org.springframework:spring-webmvc:${spring_version}",
+            "org.springframework:spring-context-support:${spring_version}",
+            "org.springframework:spring-jdbc:${spring_version}",
+            "org.springframework.session:spring-session:${springSession_version}",
+            "org.springframework.security.oauth:spring-security-oauth2:2.0.8.RELEASE",
+            "org.slf4j:slf4j-api:${slf4j_version}",
+            "org.slf4j:jcl-over-slf4j:${slf4j_version}",
+            "org.aspectj:aspectjweaver:${aspectj_version}",
+            "commons-beanutils:commons-beanutils:${beanutils_version}",
+            "commons-collections:commons-collections:${collections_version}",
+            "asm:asm:${asm_version}",
+            "cglib:cglib:${cglib_version}",
+            "mysql:mysql-connector-java:${mysql_connector_version}",
+            "com.alibaba:druid:${druid_version}",
+            "org.mybatis:mybatis:${mybatis_version}",
+            "org.mybatis:mybatis-spring:${mybatis_spring_version}",
+            "com.fasterxml.jackson.core:jackson-annotations:${jackson_version}",
+            "com.fasterxml.jackson.core:jackson-core:${jackson_version}",
+            "com.fasterxml.jackson.core:jackson-databind:${jackson_version}",
+            "javax.transaction:jta:1.1",
+            "dom4j:dom4j:${dom4j_version}",
+            "org.codehaus.groovy.modules.http-builder:http-builder:0.7.1",
+            "commons-codec:commons-codec:${commonscodec_version}",
+            "javax.servlet:javax.servlet-api:3.1.0",
+
+            "org.codehaus.groovy.modules.http-builder:http-builder:0.7.1",
+            "commons-codec:commons-codec:${commonscodec_version}",
+            "io.springfox:springfox-swagger2:${springfox_version}",
+            "org.apache.poi:poi:${poi_version}",
+            "org.apache.poi:poi-ooxml:${poi_version}",
+            "org.apache.poi:poi-scratchpad:${poi_version}",
+            "io.springfox:springfox-core:${springfox_version}", "org.asciidoctor:asciidoctor-gradle-plugin:1.5.2",
+            "org.asciidoctor:asciidoctorj-pdf:1.5.0-alpha.8",
+            "io.github.robwin:swagger2markup-gradle-plugin:0.8.0",
+            "io.springfox:springfox-swagger2:2.0.3",
+            "fakepath:bce-java-sdk:0.9.3"
+    )
+}

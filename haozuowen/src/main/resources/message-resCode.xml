@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+    <Message code="0000" desc="操作成功" />
+    <Message code="2001" desc="该书不存在" />
+    <Message code="2002" desc="excel格式不正确" />
+    <Message code="2003" desc="学校编号不存在" />
+    <Message code="2004" desc="学校前缀码不存在" />
+    <Message code="2005" desc="该班级已经有其他教师不能绑定该教师" />
+    <Message code="2006" desc="年级输入有误" />
+    <Message code="2007" desc="手机验证码错误,请重新输入" />
+    <Message code="2008" desc="该登录名不存在,请检测" />
+    <Message code="2009" desc="已过期,请重新请求" />
+    <Message code="2010" desc="手机动态码失效,请重新获取动态码" />
+    <Message code="2011" desc="手机验证码失效,请重新发送验证码" />
+    <Message code="2012" desc="学生姓名太长,请重新输入" />
+    <Message code="2013" desc="手机号已被使用，无法绑定！" />
+    <Message code="2014" desc="无效KEY值！" />
+    <Message code="2015" desc="原密码不符！" />
+    <Message code="2016" desc="密码修改失败！" />
+    <Message code="0401" desc="访问失效,请重新登录" />
+    <Message code="9001" desc="mac签名错误" />
+    <Message code="9002" desc="无效商户" />
+    <Message code="9003" desc="数据格式有误,请重新输入" />
+    <Message code="9004" desc="代理商不匹配,请重新输入" />
+    <Message code="9005" desc="页面无效,请重新请求" />
+    <Message code="9006" desc="用户名不能为空" />
+    <Message code="9007" desc="用户名或密码错误,请重新输入" />
+    <Message code="9008" desc="用户名已存在,请重新输入" />
+    <Message code="9009" desc="请确认导入为教师模板" />
+    <Message code="9010" desc="请确认导入为学生模板" />
+    <Message code="9011" desc="导入模板有问题请检查" />
+    <Message code="9012" desc="验证码不正确,请重新输入" />
+    <Message code="9013" desc="该用户不存在,不能重置密码" />
+    <Message code="9014" desc="原密码错误,请重新输入" />
+    <Message code="9015" desc="金币不足,请先充值" />
+    <Message code="9016" desc="该书已购买,无需重复购买" />
+    <Message code="9017" desc="姓名不能为空,请重新输入" />
+    <Message code="9018" desc="传入金额不正确,请重新选择" />
+    <Message code="9019" desc="下单类型输入错误,请重新选择" />
+    <Message code="9020" desc="扫码下单异常" />
+    <Message code="9021" desc="二维码已失效" />
+    <Message code="9022" desc="该用户已被使用" />
+    <Message code="9023" desc="该邮箱已被使用" />
+    <Message code="9024" desc="该用户尚未购买该书" />
+    <Message code="9030" desc="签名验证失败" />
+    <Message code="9031" desc="该用户不是教师,无权访问" />
+    <Message code="9032" desc="该类型用户无权限访问" />
+    <Message code="9034" desc="该类型用户年级信息存在，不能再添加" />
+    <Message code="9999" desc="系统异常,请重新操作" />
+    <!-- 产品选择页相关异常码 -->
+    <Message code="3001" desc="参数 data 不符合 json 格式，无法正确解析，请参看文档" />
+</Root>

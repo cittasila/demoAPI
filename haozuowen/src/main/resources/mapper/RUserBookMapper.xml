@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.mapper.RUserBookMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.RUserBook" >
+    <id column="user_book_id" property="userBookId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="book_id" property="bookId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="CHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+     <result column="read_status" property="readStatus" jdbcType="CHAR" />
+    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="is_active" property="isActive" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_book_id, user_id, book_id, create_time, update_time,read_status, is_active,price
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.userId != null" >
+         and user_id = #{params.userId,jdbcType=INTEGER}
+      </if>
+      <if test="params.bookId != null" >
+         and book_id = #{params.bookId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createTime != null" >
+         and create_time = #{params.createTime,jdbcType=CHAR}
+      </if>
+      <if test="params.updateTime != null" >
+         and update_time = #{params.updateTime,jdbcType=TIMESTAMP}
+      </if>
+        <if test="params.readStatus != null" >
+            and read_status = #{params.readStatus,jdbcType=CHAR}
+        </if>
+      <if test="params.isActive != null" >
+         and is_active = #{params.isActive,jdbcType=CHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from r_user_book
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from r_user_book
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from r_user_book
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from r_user_book
+    where user_book_id = #{userBookId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from r_user_book
+    where user_book_id = #{userBookId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.RUserBook" >
+    insert into r_user_book (user_book_id, user_id, book_id, 
+      create_time, update_time,read_status, is_active,price
+      )
+    values (#{userBookId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{bookId,jdbcType=VARCHAR},
+      #{createTime,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP},#{readStatus,jdbcType=CHAR}, #{isActive,jdbcType=CHAR},#{price,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.RUserBook" >
+    insert into r_user_book
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userBookId != null" >
+        user_book_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="readStatus != null" >
+        read_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userBookId != null" >
+        #{userBookId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="readStatus != null" >
+        #{readStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=CHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.RUserBook" >
+    update r_user_book
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null" >
+        book_id = #{bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="readStatus != null" >
+        read_status = #{readStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=CHAR},
+      </if>
+    </set>
+    where user_book_id = #{userBookId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.RUserBook" >
+    update r_user_book
+    set user_id = #{userId,jdbcType=INTEGER},
+      book_id = #{bookId,jdbcType=VARCHAR},
+      read_status = #{readStatus,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=CHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_active = #{isActive,jdbcType=CHAR}
+    where user_book_id = #{userBookId,jdbcType=INTEGER}
+  </update>
+</mapper>

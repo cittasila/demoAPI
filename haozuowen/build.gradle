@@ -1,0 +1,198 @@
+buildscript {
+    ext {
+        springBootVersion = '1.3.0.RELEASE'
+    }
+    repositories {
+        mavenLocal()
+        jcenter()
+        mavenCentral()
+        maven { url "http://repo.spring.io/release" }
+        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE")
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.2'
+        classpath 'org.asciidoctor:asciidoctorj-pdf:1.5.0-alpha.8'
+        classpath 'io.github.robwin:swagger2markup-gradle-plugin:0.8.0'
+    }
+}
+
+group 'langyingapi'
+version '1.0'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'spring-boot'
+apply plugin: 'groovy'
+apply plugin: 'war'
+sourceCompatibility = 1.7
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+war{
+    baseName="haozuowenapi"
+    version=""
+}
+ext{
+    logback_version="1.1.3"
+    groovy_version="2.4.4"
+    spring_version="4.2.3.RELEASE"
+    springSession_version="1.0.2.RELEASE"
+    slf4j_version="1.7.2"
+    aspectj_version="1.7.1"
+    beanutils_version="1.8.3"
+    collections_version="3.2.1"
+    aspectjweaver_version="1.7.1"
+    asm_version="3.1"
+    cglib_version="2.2"
+    mysql_connector_version="5.1.38"
+    druid_version="1.0.10"
+    mybatis_version="3.2.6"
+    mybatis_spring_version="1.2.2"
+    jackson_version="2.3.2"
+    dom4j_version="1.6.1"
+    commonscodec_version ="1.10"
+    poi_version="3.11"
+    springfox_version="2.0.3"
+    props = loadProperties()
+    swaggerOutputDir = file("${buildDir}/swagger")
+    asciiDocOutputDir = file("${buildDir}/asciidoc")
+    docOutputDir = file("${rootDir}/../01-doc/02-应用开发/02-接口设计/passport")
+    descriptionsDir = file("${buildDir}/descriptionsDir")
+    schemasDir= file("${buildDir}/schemasDir")
+}
+
+
+test {
+    systemProperty 'org.springframework.restdocs.outputDir', asciiDocOutputDir
+    systemProperty 'io.springfox.staticdocs.outputDir', swaggerOutputDir
+}
+
+configurations {
+    mybatisGenerator
+    sql
+}
+
+dependencies {
+
+    compile(
+            project(':lyresource'),
+            project(':usermodule'),
+            project(':payment'),
+            "ch.qos.logback:logback-access:${logback_version}",
+            "ch.qos.logback:logback-classic:${logback_version}",
+            "org.codehaus.groovy:groovy-all:${groovy_version}",
+            "org.springframework.boot:spring-boot-starter-web:${springBootVersion}",
+            "org.springframework.boot:spring-boot-starter-security:${springBootVersion}",
+            "org.springframework.boot:spring-boot-starter-redis:${springBootVersion}",
+            "org.springframework:spring-beans:${spring_version}",
+            "org.springframework:spring-web:${spring_version}",
+            "org.springframework:spring-webmvc:${spring_version}",
+            "org.springframework:spring-context-support:${spring_version}",
+            "org.springframework:spring-jdbc:${spring_version}",
+            "org.springframework.session:spring-session:${springSession_version}",
+            "org.slf4j:slf4j-api:${slf4j_version}" ,
+            "org.slf4j:jcl-over-slf4j:${slf4j_version}",
+            "org.aspectj:aspectjweaver:${aspectj_version}",
+            "commons-beanutils:commons-beanutils:${beanutils_version}",
+            "commons-collections:commons-collections:${collections_version}",
+            "org.aspectj:aspectjweaver:${aspectjweaver_version}",
+            "asm:asm:${asm_version}",
+            "cglib:cglib:${cglib_version}",
+            "mysql:mysql-connector-java:${mysql_connector_version}",
+            "com.alibaba:druid:${druid_version}",
+            "org.mybatis:mybatis:${mybatis_version}",
+            "org.mybatis:mybatis-spring:${mybatis_spring_version}",
+            "com.fasterxml.jackson.core:jackson-annotations:${jackson_version}",
+            "com.fasterxml.jackson.core:jackson-core:${jackson_version}",
+            "com.fasterxml.jackson.core:jackson-databind:${jackson_version}",
+            "javax.transaction:jta:1.1",
+            "dom4j:dom4j:${dom4j_version}",
+            "org.codehaus.groovy.modules.http-builder:http-builder:0.7.1",
+            "commons-codec:commons-codec:${commonscodec_version}",
+            "io.springfox:springfox-swagger2:${springfox_version}",
+            "org.apache.poi:poi:${poi_version}",
+            "org.apache.poi:poi-ooxml:${poi_version}",
+            "org.apache.poi:poi-scratchpad:${poi_version}",
+            "io.springfox:springfox-core:${springfox_version}", "org.asciidoctor:asciidoctor-gradle-plugin:1.5.2",
+            "org.asciidoctor:asciidoctorj-pdf:1.5.0-alpha.8",
+            "io.github.robwin:swagger2markup-gradle-plugin:0.8.0",
+            "io.springfox:springfox-swagger2:2.0.3",
+            "fakepath:bce-java-sdk:0.9.3"
+    )
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    testCompile(
+            "junit:junit:4.11",
+            "org.gmock:gmock:0.8.3",
+            "org.springframework:spring-test:${spring_version}",
+            'org.springframework.boot:spring-boot-starter-test',
+            'io.springfox:springfox-staticdocs:2.0.3',
+            'org.springframework.restdocs:spring-restdocs:1.0.0.M1',
+            'com.jayway.restassured:spring-mock-mvc:2.4.0',
+            'com.fasterxml.jackson.module:jackson-module-jsonSchema:2.4.0',
+            'io.github.robwin:assertj-swagger:0.1.1'
+    )
+    mybatisGenerator(
+            "org.mybatis.generator:mybatis-generator-core:1.3.1",
+            "mysql:mysql-connector-java:${mysql_connector_version}",
+    )
+
+    sql ("mysql:mysql-connector-java:${mysql_connector_version}")
+}
+
+
+
+def loadProperties(){
+    def p = new Properties()
+    new File("${projectDir.path}/src/test/resources/db.properties").withInputStream {
+        stream -> p.load(stream)
+    }
+    p
+}
+
+
+task mybatisGenerateOldLangyYing << {
+    ant.properties['targetProject'] = projectDir.path
+    ant.properties['driver'] = props['mysql.driver']
+    ant.properties['url'] = props['mysql.url']
+    ant.properties['user'] = props['mysql.username']
+    ant.properties['password'] = props['mysql.password']
+    ant.taskdef (
+            name: 'mbgenerator',
+            classname: 'org.mybatis.generator.ant.GeneratorAntTask',
+            classpath: configurations.mybatisGenerator.asPath
+    )
+    def configfile = projectDir.path + "/src/test/resources/generatorOldLangyYingConfig.xml"
+    ant.mbgenerator (overwrite: true,configfile: configfile,verbose: true){
+        propertyset {
+            propertyref(name:'targetProject')
+            propertyref(name:'driver')
+            propertyref(name:'url')
+            propertyref(name:'user')
+            propertyref(name:'password')
+        }
+    }
+}
+
+
+task mybatisGenerateReading << {
+    ant.properties['targetProject'] = projectDir.path
+    ant.properties['driver'] = props['mysql.driver']
+    ant.properties['url'] = props['mysql.reading.url']
+    ant.properties['user'] = props['mysql.reading.username']
+    ant.properties['password'] = props['mysql.reading.password']
+    ant.taskdef (
+            name: 'mbgenerator',
+            classname: 'org.mybatis.generator.ant.GeneratorAntTask',
+            classpath: configurations.mybatisGenerator.asPath
+    )
+    def configfile = projectDir.path + "/src/test/resources/generatorReadingConfig.xml"
+    ant.mbgenerator (overwrite: true,configfile: configfile,verbose: true){
+        propertyset {
+            propertyref(name:'targetProject')
+            propertyref(name:'driver')
+            propertyref(name:'url')
+            propertyref(name:'user')
+            propertyref(name:'password')
+        }
+    }
+}

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.mapper.UDistcdMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.UDistcd" >
+    <id column="dist_cd" property="distCd" jdbcType="CHAR" />
+    <result column="p_dist_cd" property="pDistCd" jdbcType="CHAR" />
+    <result column="prov_name" property="provName" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="cnty_name" property="cntyName" jdbcType="VARCHAR" />
+    <result column="status_cd" property="statusCd" jdbcType="CHAR" />
+    <result column="lev_cd" property="levCd" jdbcType="TINYINT" />
+    <result column="isGradeSixInPrimarySchool" property="isGradeSixInPrimarySchool" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    dist_cd, p_dist_cd, prov_name, city_name, cnty_name, status_cd, lev_cd, isGradeSixInPrimarySchool
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.pDistCd != null" >
+         and p_dist_cd = #{params.pDistCd,jdbcType=CHAR}
+      </if>
+      <if test="params.provName != null" >
+         and prov_name = #{params.provName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.cityName != null" >
+         and city_name = #{params.cityName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.cntyName != null" >
+         and cnty_name = #{params.cntyName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.statusCd != null" >
+         and status_cd = #{params.statusCd,jdbcType=CHAR}
+      </if>
+      <if test="params.levCd != null" >
+         and lev_cd = #{params.levCd,jdbcType=TINYINT}
+      </if>
+      <if test="params.isGradeSixInPrimarySchool != null" >
+        and isGradeSixInPrimarySchool = #{params.isGradeSixInPrimarySchool,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_distcd
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from u_distcd
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_distcd
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from u_distcd
+    where dist_cd = #{distCd,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from u_distcd
+    where dist_cd = #{distCd,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.UDistcd" >
+    <selectKey resultType="java.lang.String" keyProperty="distCd" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_distcd (p_dist_cd, prov_name, city_name, 
+      cnty_name, status_cd, lev_cd,isGradeSixInPrimarySchool
+      )
+    values (#{pDistCd,jdbcType=CHAR}, #{provName,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, 
+      #{cntyName,jdbcType=VARCHAR}, #{statusCd,jdbcType=CHAR}, #{levCd,jdbcType=TINYINT}, #{isGradeSixInPrimarySchool,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.UDistcd" >
+    <selectKey resultType="java.lang.String" keyProperty="distCd" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_distcd
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pDistCd != null" >
+        p_dist_cd,
+      </if>
+      <if test="provName != null" >
+        prov_name,
+      </if>
+      <if test="cityName != null" >
+        city_name,
+      </if>
+      <if test="cntyName != null" >
+        cnty_name,
+      </if>
+      <if test="statusCd != null" >
+        status_cd,
+      </if>
+      <if test="levCd != null" >
+        lev_cd,
+      </if>
+      <if test="isGradeSixInPrimarySchool != null" >
+        isGradeSixInPrimarySchool,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pDistCd != null" >
+        #{pDistCd,jdbcType=CHAR},
+      </if>
+      <if test="provName != null" >
+        #{provName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="cntyName != null" >
+        #{cntyName,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null" >
+        #{statusCd,jdbcType=CHAR},
+      </if>
+      <if test="levCd != null" >
+        #{levCd,jdbcType=TINYINT},
+      </if>
+      <if test="isGradeSixInPrimarySchool != null" >
+        #{isGradeSixInPrimarySchool,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.UDistcd" >
+    update u_distcd
+    <set >
+      <if test="pDistCd != null" >
+        p_dist_cd = #{pDistCd,jdbcType=CHAR},
+      </if>
+      <if test="provName != null" >
+        prov_name = #{provName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="cntyName != null" >
+        cnty_name = #{cntyName,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null" >
+        status_cd = #{statusCd,jdbcType=CHAR},
+      </if>
+      <if test="levCd != null" >
+        lev_cd = #{levCd,jdbcType=TINYINT},
+      </if>
+      <if test="isGradeSixInPrimarySchool != null" >
+        isGradeSixInPrimarySchool = #{isGradeSixInPrimarySchool,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dist_cd = #{distCd,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.UDistcd" >
+    update u_distcd
+    set p_dist_cd = #{pDistCd,jdbcType=CHAR},
+      prov_name = #{provName,jdbcType=VARCHAR},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      cnty_name = #{cntyName,jdbcType=VARCHAR},
+      status_cd = #{statusCd,jdbcType=CHAR},
+      lev_cd = #{levCd,jdbcType=TINYINT},
+      isGradeSixInPrimarySchool = #{isGradeSixInPrimarySchool,jdbcType=VARCHAR}
+    where dist_cd = #{distCd,jdbcType=CHAR}
+  </update>
+</mapper>

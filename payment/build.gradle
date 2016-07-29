@@ -1,0 +1,31 @@
+group 'langyingapi'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile (
+            'com.thoughtworks.xstream:xstream:1.4.7',
+            'xmlpull:xmlpull:1.1.3.1',
+            'org.apache.httpcomponents:httpmime:4.3.5',
+            'org.apache.httpcomponents:httpclient:4.3.2',
+            'org.apache.httpcomponents:httpcore:4.3.2',
+            'org.apache.httpcomponents:httpclient-cache:4.3.5',
+            'com.google.zxing:core:3.2.1',
+            'com.google.zxing:javase:3.2.1'
+    )
+       testCompile(
+            "junit:junit:4.11",
+            "org.gmock:gmock:0.8.3",
+            'com.jayway.restassured:spring-mock-mvc:2.4.0',
+            'com.fasterxml.jackson.module:jackson-module-jsonSchema:2.4.0',
+            'io.github.robwin:assertj-swagger:0.1.1'
+    )
+}

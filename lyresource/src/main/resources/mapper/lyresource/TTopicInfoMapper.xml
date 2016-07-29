@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.resourcemapper.TTopicInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.TTopicInfo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="parentid" property="parentid" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="makerid" property="makerid" jdbcType="VARCHAR" />
+    <result column="makedate" property="makedate" jdbcType="VARCHAR" />
+    <result column="lastupdaterid" property="lastupdaterid" jdbcType="VARCHAR" />
+    <result column="lastupdatedate" property="lastupdatedate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, number, name, parentid, status, makerid, makedate, lastupdaterid, lastupdatedate
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.number != null" >
+         and number = #{params.number,jdbcType=INTEGER}
+      </if>
+      <if test="params.name != null" >
+         and name = #{params.name,jdbcType=VARCHAR}
+      </if>
+      <if test="params.parentid != null" >
+         and parentid = #{params.parentid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.status != null" >
+         and status = #{params.status,jdbcType=VARCHAR}
+      </if>
+      <if test="params.makerid != null" >
+         and makerid = #{params.makerid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.makedate != null" >
+         and makedate = #{params.makedate,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastupdaterid != null" >
+         and lastupdaterid = #{params.lastupdaterid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastupdatedate != null" >
+         and lastupdatedate = #{params.lastupdatedate,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_topic_info
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from t_topic_info
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_topic_info
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_topic_info
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_topic_info
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.TTopicInfo" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_topic_info (number, name, parentid, 
+      status, makerid, makedate, 
+      lastupdaterid, lastupdatedate)
+    values (#{number,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{parentid,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{makerid,jdbcType=VARCHAR}, #{makedate,jdbcType=VARCHAR}, 
+      #{lastupdaterid,jdbcType=VARCHAR}, #{lastupdatedate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.TTopicInfo" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_topic_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="parentid != null" >
+        parentid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="makerid != null" >
+        makerid,
+      </if>
+      <if test="makedate != null" >
+        makedate,
+      </if>
+      <if test="lastupdaterid != null" >
+        lastupdaterid,
+      </if>
+      <if test="lastupdatedate != null" >
+        lastupdatedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="makerid != null" >
+        #{makerid,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null" >
+        #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdaterid != null" >
+        #{lastupdaterid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatedate != null" >
+        #{lastupdatedate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.TTopicInfo" >
+    update t_topic_info
+    <set >
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        parentid = #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="makerid != null" >
+        makerid = #{makerid,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null" >
+        makedate = #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdaterid != null" >
+        lastupdaterid = #{lastupdaterid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatedate != null" >
+        lastupdatedate = #{lastupdatedate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.TTopicInfo" >
+    update t_topic_info
+    set number = #{number,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      parentid = #{parentid,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      makerid = #{makerid,jdbcType=VARCHAR},
+      makedate = #{makedate,jdbcType=VARCHAR},
+      lastupdaterid = #{lastupdaterid,jdbcType=VARCHAR},
+      lastupdatedate = #{lastupdatedate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!-- 根据 topic 的 name 分组查询 topic 下有书本的 topic name 列表（topic 启用，article_status 发布）-->
+  <select id="queryTopicList" parameterType="java.util.HashMap" resultType="com.langying.models.TTopicInfo">
+      SELECT
+          topic.name,
+          topic.parentid,
+          topic.number,
+          topic.id,
+          topic.status,
+          topic.makerid,
+          topic.makedate,
+          topic.lastupdaterid,
+          topic.lastupdatedate
+      FROM t_topic_info topic
+      LEFT JOIN t_articletopic_relation relation ON topic.id = relation.topicid
+      LEFT JOIN `t_article_info` article ON relation.articleid = article.id
+      WHERE topic.status=#{topic_status,jdbcType=INTEGER} AND article.status =#{article_status,jdbcType=INTEGER}
+      GROUP BY topic.name
+      ORDER BY topic.name
+  </select>
+</mapper>

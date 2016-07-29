@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.mapper.RUserDoquestionMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.RUserDoquestion" >
+    <id column="user_doquestion_id" property="userDoquestionId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_book_id" property="userBookId" jdbcType="INTEGER" />
+    <result column="book_id" property="bookId" jdbcType="VARCHAR" />
+    <result column="question_id" property="questionId" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="user_dotimes" property="userDotimes" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="CHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="do_status" property="doStatus" jdbcType="CHAR" />
+    <result column="is_active" property="isActive" jdbcType="CHAR" />
+    <result column="isright" property="isright" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_doquestion_id, user_id, user_book_id, book_id, question_id, sort, user_dotimes, 
+    create_time, update_time, do_status, is_active
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.userId != null" >
+         and user_id = #{params.userId,jdbcType=INTEGER}
+      </if>
+      <if test="params.userBookId != null" >
+         and user_book_id = #{params.userBookId,jdbcType=INTEGER}
+      </if>
+      <if test="params.bookId != null" >
+         and book_id = #{params.bookId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.questionId != null" >
+         and question_id = #{params.questionId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.sort != null" >
+         and sort = #{params.sort,jdbcType=INTEGER}
+      </if>
+      <if test="params.userDotimes != null" >
+         and user_dotimes = #{params.userDotimes,jdbcType=INTEGER}
+      </if>
+      <if test="params.createTime != null" >
+         and create_time = #{params.createTime,jdbcType=CHAR}
+      </if>
+      <if test="params.updateTime != null" >
+         and update_time = #{params.updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.doStatus != null" >
+         and do_status = #{params.doStatus,jdbcType=CHAR}
+      </if>
+      <if test="params.isActive != null" >
+         and is_active = #{params.isActive,jdbcType=CHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from r_user_doquestion
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from r_user_doquestion
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from r_user_doquestion
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from r_user_doquestion
+    where user_doquestion_id = #{userDoquestionId,jdbcType=INTEGER}
+  </select>
+    <select id="selectListWithOptionInfoByParams" resultType="list" resultMap="BaseResultMap" >
+        select a.*,b.isright from r_user_doquestion a LEFT JOIN r_user_question_option b on a.user_doquestion_id =b.user_doquestion_id
+        <trim prefix="where" prefixOverrides="and|or" >
+            <if test="params.bookId != null" >
+                and  a.book_id = #{params.bookId,jdbcType=VARCHAR}
+            </if>
+            <if test="params.isActive != null" >
+                and a.is_active = #{params.isActive,jdbcType=VARCHAR}
+            </if>
+            <if test="params.userId != null" >
+                and a.user_id = #{params.userId,jdbcType=VARCHAR}
+            </if>
+        </trim>
+        <if test="orderParam != null" >
+            order by ${orderParam}
+        </if>
+    </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from r_user_doquestion
+    where user_doquestion_id = #{userDoquestionId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.RUserDoquestion" >
+    <selectKey resultType="java.lang.Integer" keyProperty="userDoquestionId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into r_user_doquestion (user_id, user_book_id, book_id, 
+      question_id, sort, user_dotimes, 
+      create_time, update_time, do_status, 
+      is_active)
+    values (#{userId,jdbcType=INTEGER}, #{userBookId,jdbcType=INTEGER}, #{bookId,jdbcType=VARCHAR}, 
+      #{questionId,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{userDotimes,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{doStatus,jdbcType=CHAR}, 
+      #{isActive,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.RUserDoquestion" >
+    <selectKey resultType="java.lang.Integer" keyProperty="userDoquestionId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into r_user_doquestion
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userBookId != null" >
+        user_book_id,
+      </if>
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="questionId != null" >
+        question_id,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="userDotimes != null" >
+        user_dotimes,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="doStatus != null" >
+        do_status,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userBookId != null" >
+        #{userBookId,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="questionId != null" >
+        #{questionId,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="userDotimes != null" >
+        #{userDotimes,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="doStatus != null" >
+        #{doStatus,jdbcType=CHAR},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.RUserDoquestion" >
+    update r_user_doquestion
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userBookId != null" >
+        user_book_id = #{userBookId,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null" >
+        book_id = #{bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="questionId != null" >
+        question_id = #{questionId,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="userDotimes != null" >
+        user_dotimes = #{userDotimes,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="doStatus != null" >
+        do_status = #{doStatus,jdbcType=CHAR},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=CHAR},
+      </if>
+    </set>
+    where user_doquestion_id = #{userDoquestionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.RUserDoquestion" >
+    update r_user_doquestion
+    set user_id = #{userId,jdbcType=INTEGER},
+      user_book_id = #{userBookId,jdbcType=INTEGER},
+      book_id = #{bookId,jdbcType=VARCHAR},
+      question_id = #{questionId,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      user_dotimes = #{userDotimes,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=CHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      do_status = #{doStatus,jdbcType=CHAR},
+      is_active = #{isActive,jdbcType=CHAR}
+    where user_doquestion_id = #{userDoquestionId,jdbcType=INTEGER}
+  </update>
+    <update id="updateUserDoQuestionActive" parameterType="com.langying.models.RUserDoquestion" >
+        update r_user_doquestion
+        set
+        is_active = #{isActive,jdbcType=CHAR}
+        where book_id = #{bookId,jdbcType=VARCHAR} and user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>

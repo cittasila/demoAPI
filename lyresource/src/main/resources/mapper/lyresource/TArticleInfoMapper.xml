@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.resourcemapper.TArticleInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.TArticleInfo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="genreid" property="genreid" jdbcType="VARCHAR" />
+    <result column="booktitle" property="booktitle" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="packisbn" property="packisbn" jdbcType="VARCHAR" />
+    <result column="resourcesource" property="resourcesource" jdbcType="VARCHAR" />
+    <result column="wordcount" property="wordcount" jdbcType="INTEGER" />
+    <result column="pagecount" property="pagecount" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="showlevel" property="showlevel" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="lexile" property="lexile" jdbcType="INTEGER" />
+    <result column="lesson" property="lesson" jdbcType="INTEGER" />
+    <result column="previewcoachpath" property="previewcoachpath" jdbcType="VARCHAR" />
+    <result column="imgurl" property="imgurl" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="makerid" property="makerid" jdbcType="VARCHAR" />
+    <result column="makedate" property="makedate" jdbcType="VARCHAR" />
+    <result column="lastupdaterid" property="lastupdaterid" jdbcType="VARCHAR" />
+    <result column="lastupdatedate" property="lastupdatedate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, number, genreid, booktitle, author, packisbn, resourcesource, wordcount, pagecount, 
+    level, showlevel, sort, lexile, lesson, previewcoachpath, imgurl, status, makerid, 
+    makedate, lastupdaterid, lastupdatedate
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.ids != null" >
+          and id in (${params.ids})
+      </if>
+      <if test="params.number != null" >
+         and number = #{params.number,jdbcType=VARCHAR}
+      </if>
+      <if test="params.genreid != null" >
+         and genreid = #{params.genreid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.booktitle != null" >
+         and booktitle = #{params.booktitle,jdbcType=VARCHAR}
+      </if>
+      <if test="params.author != null" >
+         and author = #{params.author,jdbcType=VARCHAR}
+      </if>
+      <if test="params.packisbn != null" >
+         and packisbn = #{params.packisbn,jdbcType=VARCHAR}
+      </if>
+      <if test="params.resourcesource != null" >
+         and resourcesource = #{params.resourcesource,jdbcType=VARCHAR}
+      </if>
+      <if test="params.wordcount != null" >
+         and wordcount = #{params.wordcount,jdbcType=INTEGER}
+      </if>
+      <if test="params.pagecount != null" >
+         and pagecount = #{params.pagecount,jdbcType=INTEGER}
+      </if>
+      <if test="params.level != null" >
+         and level = #{params.level,jdbcType=INTEGER}
+      </if>
+      <if test="params.showlevel != null" >
+         and showlevel = #{params.showlevel,jdbcType=VARCHAR}
+      </if>
+      <if test="params.sort != null" >
+         and sort = #{params.sort,jdbcType=INTEGER}
+      </if>
+      <if test="params.lexile != null" >
+         and lexile = #{params.lexile,jdbcType=INTEGER}
+      </if>
+
+      <if test="params.min_lexile != null and params.max_lexile != null">
+         and (lexile BETWEEN #{params.min_lexile,jdbcType=INTEGER}
+         and #{params.max_lexile,jdbcType=INTEGER})
+      </if>
+
+      <if test="params.lesson != null" >
+         and lesson = #{params.lesson,jdbcType=INTEGER}
+      </if>
+      <if test="params.previewcoachpath != null" >
+         and previewcoachpath = #{params.previewcoachpath,jdbcType=VARCHAR}
+      </if>
+      <if test="params.imgurl != null" >
+         and imgurl = #{params.imgurl,jdbcType=VARCHAR}
+      </if>
+      <if test="params.status != null" >
+         and status = #{params.status,jdbcType=VARCHAR}
+      </if>
+      <if test="params.makerid != null" >
+         and makerid = #{params.makerid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.makedate != null" >
+         and makedate = #{params.makedate,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastupdaterid != null" >
+         and lastupdaterid = #{params.lastupdaterid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastupdatedate != null" >
+         and lastupdatedate = #{params.lastupdatedate,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_article_info
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from t_article_info
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_article_info
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_article_info
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_article_info
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.TArticleInfo" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_article_info (number, genreid, booktitle, 
+      author, packisbn, resourcesource, 
+      wordcount, pagecount, level, 
+      showlevel, sort, lexile, 
+      lesson, previewcoachpath, imgurl, 
+      status, makerid, makedate, 
+      lastupdaterid, lastupdatedate)
+    values (#{number,jdbcType=VARCHAR}, #{genreid,jdbcType=VARCHAR}, #{booktitle,jdbcType=VARCHAR}, 
+      #{author,jdbcType=VARCHAR}, #{packisbn,jdbcType=VARCHAR}, #{resourcesource,jdbcType=VARCHAR}, 
+      #{wordcount,jdbcType=INTEGER}, #{pagecount,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, 
+      #{showlevel,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{lexile,jdbcType=INTEGER}, 
+      #{lesson,jdbcType=INTEGER}, #{previewcoachpath,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{makerid,jdbcType=VARCHAR}, #{makedate,jdbcType=VARCHAR}, 
+      #{lastupdaterid,jdbcType=VARCHAR}, #{lastupdatedate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.TArticleInfo" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_article_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="genreid != null" >
+        genreid,
+      </if>
+      <if test="booktitle != null" >
+        booktitle,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="packisbn != null" >
+        packisbn,
+      </if>
+      <if test="resourcesource != null" >
+        resourcesource,
+      </if>
+      <if test="wordcount != null" >
+        wordcount,
+      </if>
+      <if test="pagecount != null" >
+        pagecount,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="showlevel != null" >
+        showlevel,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="lexile != null" >
+        lexile,
+      </if>
+      <if test="lesson != null" >
+        lesson,
+      </if>
+      <if test="previewcoachpath != null" >
+        previewcoachpath,
+      </if>
+      <if test="imgurl != null" >
+        imgurl,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="makerid != null" >
+        makerid,
+      </if>
+      <if test="makedate != null" >
+        makedate,
+      </if>
+      <if test="lastupdaterid != null" >
+        lastupdaterid,
+      </if>
+      <if test="lastupdatedate != null" >
+        lastupdatedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="genreid != null" >
+        #{genreid,jdbcType=VARCHAR},
+      </if>
+      <if test="booktitle != null" >
+        #{booktitle,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="packisbn != null" >
+        #{packisbn,jdbcType=VARCHAR},
+      </if>
+      <if test="resourcesource != null" >
+        #{resourcesource,jdbcType=VARCHAR},
+      </if>
+      <if test="wordcount != null" >
+        #{wordcount,jdbcType=INTEGER},
+      </if>
+      <if test="pagecount != null" >
+        #{pagecount,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="showlevel != null" >
+        #{showlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="lexile != null" >
+        #{lexile,jdbcType=INTEGER},
+      </if>
+      <if test="lesson != null" >
+        #{lesson,jdbcType=INTEGER},
+      </if>
+      <if test="previewcoachpath != null" >
+        #{previewcoachpath,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null" >
+        #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="makerid != null" >
+        #{makerid,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null" >
+        #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdaterid != null" >
+        #{lastupdaterid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatedate != null" >
+        #{lastupdatedate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.TArticleInfo" >
+    update t_article_info
+    <set >
+      <if test="number != null" >
+        number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="genreid != null" >
+        genreid = #{genreid,jdbcType=VARCHAR},
+      </if>
+      <if test="booktitle != null" >
+        booktitle = #{booktitle,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="packisbn != null" >
+        packisbn = #{packisbn,jdbcType=VARCHAR},
+      </if>
+      <if test="resourcesource != null" >
+        resourcesource = #{resourcesource,jdbcType=VARCHAR},
+      </if>
+      <if test="wordcount != null" >
+        wordcount = #{wordcount,jdbcType=INTEGER},
+      </if>
+      <if test="pagecount != null" >
+        pagecount = #{pagecount,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="showlevel != null" >
+        showlevel = #{showlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="lexile != null" >
+        lexile = #{lexile,jdbcType=INTEGER},
+      </if>
+      <if test="lesson != null" >
+        lesson = #{lesson,jdbcType=INTEGER},
+      </if>
+      <if test="previewcoachpath != null" >
+        previewcoachpath = #{previewcoachpath,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null" >
+        imgurl = #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="makerid != null" >
+        makerid = #{makerid,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null" >
+        makedate = #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdaterid != null" >
+        lastupdaterid = #{lastupdaterid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatedate != null" >
+        lastupdatedate = #{lastupdatedate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.TArticleInfo" >
+    update t_article_info
+    set number = #{number,jdbcType=VARCHAR},
+      genreid = #{genreid,jdbcType=VARCHAR},
+      booktitle = #{booktitle,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      packisbn = #{packisbn,jdbcType=VARCHAR},
+      resourcesource = #{resourcesource,jdbcType=VARCHAR},
+      wordcount = #{wordcount,jdbcType=INTEGER},
+      pagecount = #{pagecount,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      showlevel = #{showlevel,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      lexile = #{lexile,jdbcType=INTEGER},
+      lesson = #{lesson,jdbcType=INTEGER},
+      previewcoachpath = #{previewcoachpath,jdbcType=VARCHAR},
+      imgurl = #{imgurl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      makerid = #{makerid,jdbcType=VARCHAR},
+      makedate = #{makedate,jdbcType=VARCHAR},
+      lastupdaterid = #{lastupdaterid,jdbcType=VARCHAR},
+      lastupdatedate = #{lastupdatedate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

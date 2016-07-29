@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.resourcemapper.TQuestionInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.TQuestionInfo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="articleid" property="articleid" jdbcType="VARCHAR" />
+    <result column="activity" property="activity" jdbcType="INTEGER" />
+    <result column="instruction" property="instruction" jdbcType="VARCHAR" />
+    <result column="questionstyleid" property="questionstyleid" jdbcType="VARCHAR" />
+    <result column="skillid" property="skillid" jdbcType="VARCHAR" />
+    <result column="point" property="point" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="hint" property="hint" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="makerid" property="makerid" jdbcType="VARCHAR" />
+    <result column="makedate" property="makedate" jdbcType="VARCHAR" />
+    <result column="lastupdaterid" property="lastupdaterid" jdbcType="VARCHAR" />
+    <result column="lastupdatedate" property="lastupdatedate" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.langying.models.TQuestionInfo" extends="BaseResultMap" >
+    <result column="question" property="question" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.articleid != null" >
+         and articleid = #{params.articleid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.activity != null" >
+         and activity = #{params.activity,jdbcType=INTEGER}
+      </if>
+      <if test="params.instruction != null" >
+         and instruction = #{params.instruction,jdbcType=VARCHAR}
+      </if>
+      <if test="params.questionstyleid != null" >
+         and questionstyleid = #{params.questionstyleid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.skillid != null" >
+         and skillid = #{params.skillid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.point != null" >
+         and point = #{params.point,jdbcType=INTEGER}
+      </if>
+      <if test="params.type != null" >
+         and type = #{params.type,jdbcType=INTEGER}
+      </if>
+      <if test="params.sort != null" >
+         and sort = #{params.sort,jdbcType=INTEGER}
+      </if>
+      <if test="params.hint != null" >
+         and hint = #{params.hint,jdbcType=VARCHAR}
+      </if>
+      <if test="params.status != null" >
+         and status = #{params.status,jdbcType=VARCHAR}
+      </if>
+      <if test="params.makerid != null" >
+         and makerid = #{params.makerid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.makedate != null" >
+         and makedate = #{params.makedate,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastupdaterid != null" >
+         and lastupdaterid = #{params.lastupdaterid,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastupdatedate != null" >
+         and lastupdatedate = #{params.lastupdatedate,jdbcType=VARCHAR}
+      </if>
+      <if test="params.question != null" >
+         and question = #{params.question,jdbcType=LONGVARCHAR}
+      </if>
+        <if test="params.questionstyleids != null" >
+            and questionstyleid  in (${params.questionstyleids})
+        </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_question_info
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from t_question_info
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="ResultMapWithBLOBs" >
+    select
+    <include refid="Base_Column_List" />
+      ,
+      <include refid="Blob_Column_List" />
+    from t_question_info
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <sql id="Base_Column_List" >
+    id, articleid, activity, instruction, questionstyleid, skillid, point, type, sort, 
+    hint, status, makerid, makedate, lastupdaterid, lastupdatedate
+  </sql>
+  <sql id="Blob_Column_List" >
+    question
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_question_info
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_question_info
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.TQuestionInfo" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_question_info (articleid, activity, instruction, 
+      questionstyleid, skillid, point, 
+      type, sort, hint, status, 
+      makerid, makedate, lastupdaterid, 
+      lastupdatedate, question)
+    values (#{articleid,jdbcType=VARCHAR}, #{activity,jdbcType=INTEGER}, #{instruction,jdbcType=VARCHAR}, 
+      #{questionstyleid,jdbcType=VARCHAR}, #{skillid,jdbcType=VARCHAR}, #{point,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{hint,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{makerid,jdbcType=VARCHAR}, #{makedate,jdbcType=VARCHAR}, #{lastupdaterid,jdbcType=VARCHAR}, 
+      #{lastupdatedate,jdbcType=VARCHAR}, #{question,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.TQuestionInfo" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_question_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="articleid != null" >
+        articleid,
+      </if>
+      <if test="activity != null" >
+        activity,
+      </if>
+      <if test="instruction != null" >
+        instruction,
+      </if>
+      <if test="questionstyleid != null" >
+        questionstyleid,
+      </if>
+      <if test="skillid != null" >
+        skillid,
+      </if>
+      <if test="point != null" >
+        point,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="hint != null" >
+        hint,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="makerid != null" >
+        makerid,
+      </if>
+      <if test="makedate != null" >
+        makedate,
+      </if>
+      <if test="lastupdaterid != null" >
+        lastupdaterid,
+      </if>
+      <if test="lastupdatedate != null" >
+        lastupdatedate,
+      </if>
+      <if test="question != null" >
+        question,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="articleid != null" >
+        #{articleid,jdbcType=VARCHAR},
+      </if>
+      <if test="activity != null" >
+        #{activity,jdbcType=INTEGER},
+      </if>
+      <if test="instruction != null" >
+        #{instruction,jdbcType=VARCHAR},
+      </if>
+      <if test="questionstyleid != null" >
+        #{questionstyleid,jdbcType=VARCHAR},
+      </if>
+      <if test="skillid != null" >
+        #{skillid,jdbcType=VARCHAR},
+      </if>
+      <if test="point != null" >
+        #{point,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="hint != null" >
+        #{hint,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="makerid != null" >
+        #{makerid,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null" >
+        #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdaterid != null" >
+        #{lastupdaterid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatedate != null" >
+        #{lastupdatedate,jdbcType=VARCHAR},
+      </if>
+      <if test="question != null" >
+        #{question,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.TQuestionInfo" >
+    update t_question_info
+    <set >
+      <if test="articleid != null" >
+        articleid = #{articleid,jdbcType=VARCHAR},
+      </if>
+      <if test="activity != null" >
+        activity = #{activity,jdbcType=INTEGER},
+      </if>
+      <if test="instruction != null" >
+        instruction = #{instruction,jdbcType=VARCHAR},
+      </if>
+      <if test="questionstyleid != null" >
+        questionstyleid = #{questionstyleid,jdbcType=VARCHAR},
+      </if>
+      <if test="skillid != null" >
+        skillid = #{skillid,jdbcType=VARCHAR},
+      </if>
+      <if test="point != null" >
+        point = #{point,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="hint != null" >
+        hint = #{hint,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="makerid != null" >
+        makerid = #{makerid,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null" >
+        makedate = #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdaterid != null" >
+        lastupdaterid = #{lastupdaterid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatedate != null" >
+        lastupdatedate = #{lastupdatedate,jdbcType=VARCHAR},
+      </if>
+      <if test="question != null" >
+        question = #{question,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.langying.models.TQuestionInfo" >
+    update t_question_info
+    set articleid = #{articleid,jdbcType=VARCHAR},
+      activity = #{activity,jdbcType=INTEGER},
+      instruction = #{instruction,jdbcType=VARCHAR},
+      questionstyleid = #{questionstyleid,jdbcType=VARCHAR},
+      skillid = #{skillid,jdbcType=VARCHAR},
+      point = #{point,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      hint = #{hint,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      makerid = #{makerid,jdbcType=VARCHAR},
+      makedate = #{makedate,jdbcType=VARCHAR},
+      lastupdaterid = #{lastupdaterid,jdbcType=VARCHAR},
+      lastupdatedate = #{lastupdatedate,jdbcType=VARCHAR},
+      question = #{question,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.TQuestionInfo" >
+    update t_question_info
+    set articleid = #{articleid,jdbcType=VARCHAR},
+      activity = #{activity,jdbcType=INTEGER},
+      instruction = #{instruction,jdbcType=VARCHAR},
+      questionstyleid = #{questionstyleid,jdbcType=VARCHAR},
+      skillid = #{skillid,jdbcType=VARCHAR},
+      point = #{point,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      hint = #{hint,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      makerid = #{makerid,jdbcType=VARCHAR},
+      makedate = #{makedate,jdbcType=VARCHAR},
+      lastupdaterid = #{lastupdaterid,jdbcType=VARCHAR},
+      lastupdatedate = #{lastupdatedate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

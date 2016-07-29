@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.resourcemapper.TGradeBookMapper">
+
+
+
+    <resultMap id="BaseResultMap" type="com.langying.models.TGradeBook">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="grade_label" property="gradeId" jdbcType="VARCHAR"/>
+        <result column="grade_name" property="gradeName" jdbcType="VARCHAR"/>
+        <result column="min_lexile" property="minLexile" jdbcType="INTEGER"/>
+        <result column="max_lexile" property="maxLexile" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="queryAllGrade" resultMap="BaseResultMap">
+        SELECT
+            id,
+            grade_label,
+            grade_name,
+            min_lexile,
+            max_lexile
+        FROM langying.r_grade_book
+    </select>
+
+    <select id="selectByParams" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        SELECT
+            id,
+            grade_label,
+            grade_name,
+            min_lexile,
+            max_lexile
+        FROM langying.r_grade_book
+        WHERE
+            grade_label = #{gradeId,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

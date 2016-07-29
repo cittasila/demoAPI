@@ -1,0 +1,60 @@
+mysql:
+    driver: com.mysql.jdbc.Driver
+    maxActive: 20
+    oldlangying:
+            url: jdbc:mysql://10.46.30.32:3306/langying?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+            username: root
+            password: Nuo%9ojCB^@d2Dfc
+
+
+    lyresource:
+        url: jdbc:mysql://10.46.30.32:3306/lyresource?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+        username: root
+        password: Nuo%9ojCB^@d2Dfc
+
+
+spring:
+  redis:
+    host: 10.46.24.161
+    port: 6379
+
+
+cache:
+  shhzw: 1800
+  verificationCode: 180
+  userInfoUuidByMobile: 1800
+  securityCode: 1800
+  payCode: 300
+  token: 21600
+logging:
+  path: ../logs/haozuowenapi/
+  file: ../logs/haozuowenapi
+
+multipart :
+  max-file-size: 20Mb
+  max-request-size: 20Mb
+
+reading:
+  user:
+    gold:
+      initNum: 100
+  registerUser:
+    gold:
+      initNum: 100
+
+goldcoin:
+  bookgoldcoin: 10
+
+weixin:
+  key: 6c0c956445914c858e3990ff82fb236f
+  appID: wxb19eb092a6d891af
+  mchID: 1318708701
+
+alipay:
+  partner: 2088511881019952
+  sellerId: 2088511881019952
+  key: 5e6yuxe79abzq8j3wmo7ualn4u7nay3w
+  notify:
+    url: http://www.17english.com:8087/haozuowenapi/pay/notify/
+  return:
+    url: http://www.17english.com/jsp/close/window.html

@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langying.controller.mapper.UUserMapper" >
+  <resultMap id="BaseResultMap" type="com.langying.models.UUser" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_pwd" property="userPwd" jdbcType="CHAR" />
+    <result column="user_build_date" property="userBuildDate" jdbcType="TIMESTAMP" />
+    <result column="user_login_date" property="userLoginDate" jdbcType="TIMESTAMP" />
+    <result column="user_student_id" property="userStudentId" jdbcType="VARCHAR" />
+    <result column="user_real_name" property="userRealName" jdbcType="VARCHAR" />
+    <result column="user_gender" property="userGender" jdbcType="CHAR" />
+    <result column="user_birthday" property="userBirthday" jdbcType="DATE" />
+    <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="user_parent_name" property="userParentName" jdbcType="VARCHAR" />
+    <result column="user_parent_phone" property="userParentPhone" jdbcType="VARCHAR" />
+    <result column="user_effective" property="userEffective" jdbcType="CHAR" />
+    <result column="token_id" property="tokenId" jdbcType="INTEGER" />
+    <result column="login_times" property="loginTimes" jdbcType="INTEGER" />
+    <result column="reading_id" property="readingId" jdbcType="INTEGER" />
+    <result column="word_id" property="wordId" jdbcType="INTEGER" />
+    <result column="sjtu_id" property="sjtuId" jdbcType="INTEGER" />
+    <result column="user_register_type" property="userRegisterType" jdbcType="VARCHAR" />
+    <result column="school_name" property="schoolName" jdbcType="VARCHAR" />
+    <result column="grade_name" property="gradeName" jdbcType="VARCHAR"/>
+    <result column="classes_name" property="classesName" jdbcType="VARCHAR"/>
+    <result column="role_id" property="roleId" jdbcType="VARCHAR"/>
+    <result column="grade_id" property="gradeId" jdbcType="VARCHAR"/>
+    <result column="classes_id" property="classesId" jdbcType="INTEGER"/>
+    <result column="user_type" property="userType" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_name, user_pwd, user_build_date, user_login_date, user_student_id, 
+    user_real_name, user_gender, user_birthday, user_phone, user_email, user_parent_name, 
+    user_parent_phone, user_effective, token_id, login_times, reading_id, word_id, sjtu_id, 
+    user_register_type,user_type
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="params.userName != null" >
+         and user_name = #{params.userName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.userPwd != null" >
+         and user_pwd = #{params.userPwd,jdbcType=CHAR}
+      </if>
+      <if test="params.userBuildDate != null" >
+         and user_build_date = #{params.userBuildDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.userLoginDate != null" >
+         and user_login_date = #{params.userLoginDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.userStudentId != null" >
+         and user_student_id = #{params.userStudentId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.userRealName != null" >
+         and user_real_name = #{params.userRealName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.userGender != null" >
+         and user_gender = #{params.userGender,jdbcType=CHAR}
+      </if>
+      <if test="params.userBirthday != null" >
+         and user_birthday = #{params.userBirthday,jdbcType=DATE}
+      </if>
+      <if test="params.userPhone != null" >
+         and user_phone = #{params.userPhone,jdbcType=VARCHAR}
+      </if>
+      <if test="params.userEmail != null" >
+         and user_email = #{params.userEmail,jdbcType=VARCHAR}
+      </if>
+      <if test="params.userParentName != null" >
+         and user_parent_name = #{params.userParentName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.userParentPhone != null" >
+         and user_parent_phone = #{params.userParentPhone,jdbcType=VARCHAR}
+      </if>
+      <if test="params.userEffective != null" >
+         and user_effective = #{params.userEffective,jdbcType=CHAR}
+      </if>
+      <if test="params.tokenId != null" >
+         and token_id = #{params.tokenId,jdbcType=INTEGER}
+      </if>
+      <if test="params.loginTimes != null" >
+         and login_times = #{params.loginTimes,jdbcType=INTEGER}
+      </if>
+      <if test="params.readingId != null" >
+         and reading_id = #{params.readingId,jdbcType=INTEGER}
+      </if>
+      <if test="params.wordId != null" >
+         and word_id = #{params.wordId,jdbcType=INTEGER}
+      </if>
+      <if test="params.sjtuId != null" >
+         and sjtu_id = #{params.sjtuId,jdbcType=INTEGER}
+      </if>
+      <if test="params.userRegisterType != null" >
+         and user_register_type = #{params.userRegisterType,jdbcType=VARCHAR}
+      </if>
+      <if test="params.loginNameString != null" >
+        and user_name in (${params.loginNameString})
+      </if>
+        <if test="params.notUserId != null" >
+            and user_id != #{params.notUserId,jdbcType=INTEGER}
+        </if>
+        <if test="params.userType != null" >
+            and user_type = #{params.userType,jdbcType=VARCHAR}
+        </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_user
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int" >
+    select count(*) from u_user
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultType="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_user
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null" >
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from u_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from u_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.langying.models.UUser" >
+    <selectKey resultType="java.lang.Integer" keyProperty="userId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_user (user_name, user_pwd, user_build_date,
+      user_login_date, user_student_id, user_real_name, 
+      user_gender, user_birthday, user_phone, 
+      user_email, user_parent_name, user_parent_phone, 
+      user_effective, token_id, login_times, 
+      reading_id, word_id, sjtu_id, 
+      user_register_type,user_type)
+    values (#{userName,jdbcType=VARCHAR}, #{userPwd,jdbcType=CHAR}, #{userBuildDate,jdbcType=TIMESTAMP},
+      #{userLoginDate,jdbcType=TIMESTAMP}, #{userStudentId,jdbcType=VARCHAR}, #{userRealName,jdbcType=VARCHAR}, 
+      #{userGender,jdbcType=CHAR}, #{userBirthday,jdbcType=DATE}, #{userPhone,jdbcType=VARCHAR}, 
+      #{userEmail,jdbcType=VARCHAR}, #{userParentName,jdbcType=VARCHAR}, #{userParentPhone,jdbcType=VARCHAR}, 
+      #{userEffective,jdbcType=CHAR}, #{tokenId,jdbcType=INTEGER}, #{loginTimes,jdbcType=INTEGER}, 
+      #{readingId,jdbcType=INTEGER}, #{wordId,jdbcType=INTEGER}, #{sjtuId,jdbcType=INTEGER}, 
+      #{userRegisterType,jdbcType=VARCHAR},#{userType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.langying.models.UUser" >
+    <selectKey resultType="java.lang.Integer" keyProperty="userId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userPwd != null" >
+        user_pwd,
+      </if>
+
+      <if test="userBuildDate != null" >
+        user_build_date,
+      </if>
+      <if test="userLoginDate != null" >
+        user_login_date,
+      </if>
+      <if test="userStudentId != null" >
+        user_student_id,
+      </if>
+      <if test="userRealName != null" >
+        user_real_name,
+      </if>
+      <if test="userGender != null" >
+        user_gender,
+      </if>
+      <if test="userBirthday != null" >
+        user_birthday,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="userEmail != null" >
+        user_email,
+      </if>
+      <if test="userParentName != null" >
+        user_parent_name,
+      </if>
+      <if test="userParentPhone != null" >
+        user_parent_phone,
+      </if>
+      <if test="userEffective != null" >
+        user_effective,
+      </if>
+      <if test="tokenId != null" >
+        token_id,
+      </if>
+      <if test="loginTimes != null" >
+        login_times,
+      </if>
+      <if test="readingId != null" >
+        reading_id,
+      </if>
+      <if test="wordId != null" >
+        word_id,
+      </if>
+      <if test="sjtuId != null" >
+        sjtu_id,
+      </if>
+      <if test="userRegisterType != null" >
+        user_register_type,
+      </if>
+        <if test="userType != null" >
+            user_type,
+        </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        #{userPwd,jdbcType=CHAR},
+      </if>
+      <if test="userBuildDate != null" >
+        #{userBuildDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userLoginDate != null" >
+        #{userLoginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userStudentId != null" >
+        #{userStudentId,jdbcType=VARCHAR},
+      </if>
+      <if test="userRealName != null" >
+        #{userRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="userGender != null" >
+        #{userGender,jdbcType=CHAR},
+      </if>
+      <if test="userBirthday != null" >
+        #{userBirthday,jdbcType=DATE},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userParentName != null" >
+        #{userParentName,jdbcType=VARCHAR},
+      </if>
+      <if test="userParentPhone != null" >
+        #{userParentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEffective != null" >
+        #{userEffective,jdbcType=CHAR},
+      </if>
+      <if test="tokenId != null" >
+        #{tokenId,jdbcType=INTEGER},
+      </if>
+      <if test="loginTimes != null" >
+        #{loginTimes,jdbcType=INTEGER},
+      </if>
+      <if test="readingId != null" >
+        #{readingId,jdbcType=INTEGER},
+      </if>
+      <if test="wordId != null" >
+        #{wordId,jdbcType=INTEGER},
+      </if>
+      <if test="sjtuId != null" >
+        #{sjtuId,jdbcType=INTEGER},
+      </if>
+      <if test="userRegisterType != null" >
+        #{userRegisterType,jdbcType=VARCHAR},
+      </if>
+        <if test="userType != null" >
+            #{userType,jdbcType=VARCHAR},
+        </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.langying.models.UUser" >
+    update u_user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        user_pwd = #{userPwd,jdbcType=CHAR},
+      </if>
+      <if test="userBuildDate != null" >
+        user_build_date = #{userBuildDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userLoginDate != null" >
+        user_login_date = #{userLoginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userStudentId != null" >
+        user_student_id = #{userStudentId,jdbcType=VARCHAR},
+      </if>
+      <if test="userRealName != null" >
+        user_real_name = #{userRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="userGender != null" >
+        user_gender = #{userGender,jdbcType=CHAR},
+      </if>
+      <if test="userBirthday != null" >
+        user_birthday = #{userBirthday,jdbcType=DATE},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userParentName != null" >
+        user_parent_name = #{userParentName,jdbcType=VARCHAR},
+      </if>
+      <if test="userParentPhone != null" >
+        user_parent_phone = #{userParentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEffective != null" >
+        user_effective = #{userEffective,jdbcType=CHAR},
+      </if>
+      <if test="tokenId != null" >
+        token_id = #{tokenId,jdbcType=INTEGER},
+      </if>
+      <if test="loginTimes != null" >
+        login_times = #{loginTimes,jdbcType=INTEGER},
+      </if>
+      <if test="readingId != null" >
+        reading_id = #{readingId,jdbcType=INTEGER},
+      </if>
+      <if test="wordId != null" >
+        word_id = #{wordId,jdbcType=INTEGER},
+      </if>
+      <if test="sjtuId != null" >
+        sjtu_id = #{sjtuId,jdbcType=INTEGER},
+      </if>
+      <if test="userRegisterType != null" >
+        user_register_type = #{userRegisterType,jdbcType=VARCHAR},
+      </if>
+        <if test="userType != null" >
+            user_type = #{userType,jdbcType=VARCHAR},
+        </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.langying.models.UUser" >
+    update u_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_pwd = #{userPwd,jdbcType=CHAR},
+      user_build_date = #{userBuildDate,jdbcType=TIMESTAMP},
+      user_login_date = #{userLoginDate,jdbcType=TIMESTAMP},
+      user_student_id = #{userStudentId,jdbcType=VARCHAR},
+      user_real_name = #{userRealName,jdbcType=VARCHAR},
+      user_gender = #{userGender,jdbcType=CHAR},
+      user_birthday = #{userBirthday,jdbcType=DATE},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_email = #{userEmail,jdbcType=VARCHAR},
+      user_parent_name = #{userParentName,jdbcType=VARCHAR},
+      user_parent_phone = #{userParentPhone,jdbcType=VARCHAR},
+      user_effective = #{userEffective,jdbcType=CHAR},
+      token_id = #{tokenId,jdbcType=INTEGER},
+      login_times = #{loginTimes,jdbcType=INTEGER},
+      reading_id = #{readingId,jdbcType=INTEGER},
+      word_id = #{wordId,jdbcType=INTEGER},
+      sjtu_id = #{sjtuId,jdbcType=INTEGER},
+      user_type = #{userType,jdbcType=VARCHAR},
+      user_register_type = #{userRegisterType,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <select id="queryByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+        u.user_id,
+        u.user_name,
+        u.user_phone,
+        u.user_gender,
+        u.user_parent_name,
+        u.user_parent_phone,
+        u.user_register_type,
+        u.user_pwd,
+        u.user_real_name,
+        u.user_email,
+        u.login_times,
+        s.school_name,
+        g.grade_name,
+        g.grade_id,
+        c.classes_id,
+        c.classes_name,
+        u.user_login_date,
+        u.token_id,
+        u.reading_id,
+        u.word_id,
+        u.sjtu_id,
+        u.user_register_type,
+        role.role_id,
+        rug.gold_num amount,
+        ud.prov_name provName
+    FROM
+      u_user u
+      LEFT JOIN u_user_role role
+        ON u.user_id = role.user_id
+      LEFT JOIN u_classes_user cu
+        ON u.user_id = cu.user_id
+      LEFT JOIN u_classes c
+        ON cu.classes_id = c.classes_id
+      LEFT JOIN u_school_grade sg
+        ON c.school_grade_id = sg.school_grade_id
+      LEFT JOIN u_grade g
+        ON sg.grade_id = g.grade_id
+      LEFT JOIN u_school s
+        ON sg.school_id = s.school_id
+          LEFT JOIN r_user_gold rug ON u.user_id = rug.user_id
+          LEFT JOIN u_distcd ud ON s.dist_cd = ud.dist_cd
+    WHERE u.user_name = #{userName,jdbcType=VARCHAR}
+      AND (
+        u.user_effective = '1'
+        OR u.user_effective = '2'
+      )
+    GROUP BY u.user_id
+  </select>
+
+  <select id="queryUserListByParam" resultMap="BaseResultMap">
+    SELECT  a.user_id,
+  a.user_name,
+  a.user_pwd,
+  a.user_real_name,
+    a.user_phone,
+    a.user_gender,
+    a.user_parent_name,
+    a.user_parent_phone,
+  a.user_email,
+  a.login_times,
+  f.grade_name,
+  f.grade_id,
+  c.classes_name,
+  a.user_login_date,
+  e.role_id from u_user a left JOIN  u_classes_user b on a.user_id=b.user_id LEFT JOIN u_classes c on c.classes_id=b.classes_id LEFT JOIN u_school_grade d
+on d.school_grade_id=c.school_grade_id LEFT JOIN u_grade f on f.grade_id=d.grade_id LEFT JOIN u_user_role e on e.user_id=a.user_id where 1=1
+    <if test="params.roleId != null" >
+      and e.role_id = #{params.roleId,jdbcType=VARCHAR}
+    </if>
+    <if test="params.schoolId != null" >
+      and d.school_id = #{params.schoolId,jdbcType=VARCHAR}
+    </if>
+    <if test="params.teacherId!=null">
+      and b.classes_id in(select classes_id from u_classes_user f left join u_user_role e on e.user_id=f.user_id  where e.role_id=42 and   f.user_id=#{params.teacherId,jdbcType=VARCHAR})
+    </if>
+    group by a.user_id
+  </select>
+
+
+
+  <select id="queryClassesUserListByParam" resultMap="BaseResultMap">
+    SELECT   a.user_id, user_name, user_pwd, user_build_date, user_login_date, user_student_id,
+    user_real_name, user_gender, user_birthday, user_phone, user_email, user_parent_name,
+    user_parent_phone, user_effective, token_id, login_times, reading_id, word_id, sjtu_id,
+    user_register_type,c.classes_id
+    <include refid="Base_Column_List" />
+    from u_user a LEFT JOIN u_user_role b on a.user_id=b.user_id LEFT JOIN
+ u_classes_user c on a.user_id=c.user_id where 1=1
+    <if test="params.roleId != null" >
+      and b.role_id = #{params.roleId,jdbcType=VARCHAR}
+    </if>
+    <if test="params.classesId != null" >
+      and c.classes_id = #{params.classesId,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>
